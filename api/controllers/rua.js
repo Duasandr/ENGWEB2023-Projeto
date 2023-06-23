@@ -21,7 +21,7 @@ class RuaController extends Controller {
      * @param {*} order Represents the order (1 for ascending, -1 for descending)
      * @returns {Promise} - The promise of the query
      */
-    getAllSortedByName(order) { return this.getAllSorted({ "nome": order }).exec() }
+    getAllSortedByName(order) { return this.getAllSorted({ "nome": order }) }
 }
 
 module.exports = { RuaController }
