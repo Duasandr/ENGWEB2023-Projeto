@@ -79,7 +79,7 @@ Com base na estrutura dos ficheiros XML, foram definidos os seguintes modelos:
 * ```casa```: contém o número, lista de enfiteutas, foro, descrição e vista;
 * ```lugar```;
 * ```data```;
-* ```entidade```: contém o nome e tipo de entidade;
+* ```entidade```: contém o nome e tipo de entidade. O tipo de entidade é um tipo enumerado com os seguintes valores: ```pessoa```, ```instituição```, ```empresa``` e ```família```;
 * ```enfiteuta```;
 * ```post```: contém o título, texto, data de criação, data de edição, autor, lista de comentários;
 * ```comentario```: contém o texto, data de criação, data de edição, autor.

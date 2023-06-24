@@ -3,12 +3,12 @@
  */
 const express = require('express');
 const router = express.Router();
-const cb = require('../callbacks/imagens')
+const cb = require('../callbacks/enfiteutas')
 
 // GET routes
 
 /**
- * GET route for the index / route.
+ * GET route for the index api/enfiteutas/ route.
  */
 router.get('/', cb.index)
 

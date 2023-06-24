@@ -24,4 +24,4 @@ const CasaSchema = new Schema({
 })
 
 // Export model with name, schema and collection
-module.exports = mongoose.model('Casa', CasaSchema, 'Casas')
+module.exports = mongoose.model('Casa', CasaSchema, 'casas')

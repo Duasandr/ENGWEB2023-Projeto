@@ -6,6 +6,12 @@ var logger = require('morgan');
 const indexRouter = require('./routes/index')
 const ruasRouter = require('./routes/ruas')
 const imagensRouter = require('./routes/imagens')
+const casasRouter = require('./routes/casas')
+const lugaresRouter = require('./routes/lugares')
+const entidadesRouter = require('./routes/entidades')
+const enfiteutasRouter = require('./routes/enfiteutas')
+const datasRouter = require('./routes/datas')
+
 
 // Connection to MongoDB
 
@@ -30,7 +36,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', indexRouter)
 app.use('/api/ruas', ruasRouter)
 app.use('/api/imagens', imagensRouter)
-app.use('/api/casas', require('./routes/casas'))
+app.use('/api/casas', casasRouter)
+app.use('/api/lugares', lugaresRouter)
+app.use('/api/entidades', entidadesRouter)
+app.use('/api/enfiteutas', enfiteutasRouter)
+app.use('/api/datas', datasRouter)
 
 
 // catch 404 and forward to error handler
