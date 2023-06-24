@@ -3,7 +3,6 @@
 /**
  * Module dependencies
  */
-const Controller = require('../controllers/controller')
 const { RuaController } = require('../controllers/rua')
 
 /**
@@ -22,7 +21,7 @@ const controller = new RuaController()
  */
 exports.index = async (req, res, next) => {
     try{
-        const documentArray = await controller.getAllSortedByName(Controller.SORT.ASC)
+        const documentArray = await controller.getAllSortedByName(RuaController.SORT.ASC)
         res.status(200).jsonp({ ruas: documentArray })
     } catch (err) {
         console.error(err.stack)
