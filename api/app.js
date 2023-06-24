@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', indexRouter)
 app.use('/api/ruas', ruasRouter)
 app.use('/api/imagens', imagensRouter)
+app.use('/api/casas', require('./routes/casas'))
 
 
 // catch 404 and forward to error handler
