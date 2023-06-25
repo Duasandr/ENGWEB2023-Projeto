@@ -66,17 +66,19 @@ Como decisão de implementação, foi decidido que a API consegue manipular as s
 * ```posts```: contém a informação relativa aos posts;
 * ```comentarios```: contém a informação relativa aos comentários.
 
-Deste modo permite a separação da informação em diferentes coleções, o que permite uma maior flexibilidade na manipulação da informação, bem como a pssibilidade de extender os tipos de dados. As coleções ```lugares```, ```datas```  foram criadas de modo a facilitar a implementação dos requisitos [RM3](#411-requisitos-de-manipulação) e [RM4](#411-requisitos-de-manipulação).
+Deste modo permite a separação da informação em diferentes coleções, o que permite uma maior flexibilidade na manipulação da informação, bem como a pssibilidade de extender os tipos de dados. As coleções ```lugares```, ```datas```  foram criadas de modo a facilitar a implementação da navegação por índice topomínico e cronológico ([RM3](#411-requisitos-de-manipulação) e [RM4](#411-requisitos-de-manipulação)). Foi consideredo que a navegação por lugar e data é relativa às referências encontradas nas descrições presentes nos ficheiros XML.
+
 
 #### 2.4.1. Modelos e Controladores
 
 Para cada coleção foi criado um modelo e um controlador. O modelo é responsável pela definição da estrutura dos documentos da coleção e o controlador é responsável pela manipulação dos documentos da coleção. 
 
-Com base na estrutura dos ficheiros XML, foram definidos os seguintes modelos:
+Com base no [modelo ER](#modeloEr.png) concebido depois da análise dos ficheiros XML e do problema em questão, 
+foram definidos os seguintes ```Schemas``` em ```mongoose```:
 
-* ```rua```: contém o nome, número, lista de parágrafos, lista de casas e lista de figuras;
+* [rua](#https://github.com/Duasandr/ENGWEB2023-Projeto/blob/99ad9933b827b19f5a7dbf6dde68b5ecc146ca79/api/models/rua.js#L17C1-L24C3): contém o nome, número e lista de parágrafos;
 * ```imagem```: contém o ```path``` e a legenda;
-* ```casa```: contém o número, lista de enfiteutas, foro, descrição e vista;
+* ```casa```: contém o número, foro, descrição e vista;
 * ```lugar```;
 * ```data```;
 * ```entidade```: contém o nome e tipo de entidade. O tipo de entidade é um tipo enumerado com os seguintes valores: ```pessoa```, ```instituição```, ```empresa``` e ```família```;
