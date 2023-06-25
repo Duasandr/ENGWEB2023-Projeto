@@ -56,15 +56,7 @@ A API de dados foi desenvolvida em Node.js. Esta API permite a manipulação da 
 
 Como decisão de implementação, foi decidido que a API consegue manipular as seguintes coleções:
 
-* ```ruas```: contém a informação relativa às ruas;
-* ```imagens```: contém a informação relativa às imagens;
-* ```casas```: contém a informação relativa às casas.
-* ```lugares```: contém a informação relativa aos lugares.
-* ```datas```: contém a informação relativa às datas.
-* ```entidades```: contém a informação relativa às entidades.
-* ```enfiteutas```: contém a informação relativa aos enfiteutas.
-* ```posts```: contém a informação relativa aos posts;
-* ```comentarios```: contém a informação relativa aos comentários.
+Ruas, Imagens, Casas, Lugares, Datas, Entidades, Enfiteutas, Posts e Comentários.
 
 Deste modo permite a separação da informação em diferentes coleções, o que permite uma maior flexibilidade na manipulação da informação, bem como a pssibilidade de extender os tipos de dados. As coleções ```lugares```, ```datas```  foram criadas de modo a facilitar a implementação da navegação por índice topomínico e cronológico ([RM3](#411-requisitos-de-manipulação) e [RM4](#411-requisitos-de-manipulação)). Foi consideredo que a navegação por lugar e data é relativa às referências encontradas nas descrições presentes nos ficheiros XML.
 
@@ -73,18 +65,19 @@ Deste modo permite a separação da informação em diferentes coleções, o que
 
 Para cada coleção foi criado um modelo e um controlador. O modelo é responsável pela definição da estrutura dos documentos da coleção e o controlador é responsável pela manipulação dos documentos da coleção. 
 
-Com base no [modelo ER](#modeloEr.png) concebido depois da análise dos ficheiros XML e do problema em questão, 
+Com base no modelo ER concebido depois da análise dos ficheiros XML e do problema em questão, 
 foram definidos os seguintes ```Schemas``` em ```mongoose```:
 
-* [rua](#https://github.com/Duasandr/ENGWEB2023-Projeto/blob/99ad9933b827b19f5a7dbf6dde68b5ecc146ca79/api/models/rua.js#L17C1-L24C3): contém o nome, número e lista de parágrafos;
+* ```rua```: contém o nome, número e lista de parágrafos;
 * ```imagem```: contém o ```path``` e a legenda;
 * ```casa```: contém o número, foro, descrição e vista;
 * ```lugar```;
 * ```data```;
 * ```entidade```: contém o nome e tipo de entidade. O tipo de entidade é um tipo enumerado com os seguintes valores: ```pessoa```, ```instituição```, ```empresa``` e ```família```;
 * ```enfiteuta```;
-* ```post```: contém o título, texto, data de criação, data de edição, autor, lista de comentários;
-* ```comentario```: contém o texto, data de criação, data de edição, autor.
+* ```post```: contém o título, texto, data de criação, data de edição;
+* ```comentario```: contém o texto, data de criação, data de edição.
+* ```utilizador```: contém o nome, email, filiação, nível, data de registo, data de ultimo acesso e password.
 
 
 ## 3. Conclusão
