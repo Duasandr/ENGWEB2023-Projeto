@@ -1,7 +1,7 @@
 /**
  * Model dependencies
  */
-const EnfiteutaModel = require('../models/enfiteuta');
+const EnfiteutaModel = require('../../models/entities/enfiteuta');
 const Controller = require('./controller')
 
 /**

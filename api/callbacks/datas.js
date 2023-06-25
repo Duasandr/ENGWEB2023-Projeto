@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { DataController } = require('../controllers/data')
+const { DataController } = require('../controllers/entities/data')
 
 /**
  * Controller for the Data model

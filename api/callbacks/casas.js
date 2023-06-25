@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { CasaController } = require('../controllers/casa')
+const { CasaController } = require('../controllers/entities/casa')
 
 /**
  * Controller for the Casa model

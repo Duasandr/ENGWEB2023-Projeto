@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { EntidadeController } = require('../controllers/entidade')
+const { EntidadeController } = require('../controllers/entities/entidade')
 
 /**
  * Controller for the Entidade model

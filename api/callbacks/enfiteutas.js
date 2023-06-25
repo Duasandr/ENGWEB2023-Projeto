@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { EnfiteutaController } = require('../controllers/enfiteuta')
+const { EnfiteutaController } = require('../controllers/entities/enfiteuta')
 
 /**
  * Controller for the Enfiteuta model

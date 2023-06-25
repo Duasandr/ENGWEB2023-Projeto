@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { RuaController } = require('../controllers/rua')
+const { RuaController } = require('../controllers/entities/rua')
 
 /**
  * Controller for the Rua model

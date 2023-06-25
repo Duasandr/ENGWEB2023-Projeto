@@ -1,7 +1,7 @@
 /**
  * Model dependencies
  */
-const DataModel = require('../models/data');
+const DataModel = require('../../models/entities/data');
 const Controller = require('./controller')
 
 /**

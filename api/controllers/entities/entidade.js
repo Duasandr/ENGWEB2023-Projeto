@@ -1,7 +1,7 @@
 /**
  * Model dependencies
  */
-const EntidadeModel = require('../models/entidade');
+const EntidadeModel = require('../../models/entities/entidade');
 const Controller = require('./controller')
 
 /**

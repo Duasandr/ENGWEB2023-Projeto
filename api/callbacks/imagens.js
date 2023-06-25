@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { ImagemController } = require('../controllers/imagem')
+const { ImagemController } = require('../controllers/entities/imagem')
 
 /**
  * Controller for the Imagem model

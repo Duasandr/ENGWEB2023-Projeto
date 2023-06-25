@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-const { LugarController } = require('../controllers/Lugar')
+const { LugarController } = require('../controllers/entities/lugar')
 
 /**
  * Controller for the Lugar model

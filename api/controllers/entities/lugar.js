@@ -1,7 +1,7 @@
 /**
  * Model dependencies
  */
-const LugarModel = require('../models/lugar');
+const LugarModel = require('../../models/entities/lugar');
 const Controller = require('./controller')
 
 /**

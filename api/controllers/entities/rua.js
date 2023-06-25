@@ -1,7 +1,7 @@
 /**
  * Model dependencies
  */
-const RuaModel = require('../models/rua');
+const RuaModel = require('../../models/entities/rua');
 const Controller = require('./controller')
 
 /**
