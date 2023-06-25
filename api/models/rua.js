@@ -18,9 +18,6 @@ const RuaSchema = new Schema({
     _id: String,
     "numero": String,
     "nome": { type: String, required: true },
-    "figuras": [String],
-    "paragrafos": [String],
-    "casas": [String],
 })
 
 // Export model with name, schema and collection
