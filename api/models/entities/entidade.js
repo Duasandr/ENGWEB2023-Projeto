@@ -12,7 +12,7 @@ const Schema = mongoose.Schema
  */
 const EntidadeSchema = new Schema({
     _id: String,
-    "nome": { type: String, required: true }
+    "tipo": { type: String, required: true, enum: ['pessoa', 'familia', 'instituicao', 'empresa'] },
 })
 
 module.exports = mongoose.model('Entidade', EntidadeSchema, 'entidades')

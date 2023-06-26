@@ -2,7 +2,7 @@
  * Model dependencies
  */
 const ImagemModel = require('../../models/entities/imagem');
-const Controller = require('./controller')
+const Controller = require('../controller')
 
 /**
  * Controller for the Imagem model

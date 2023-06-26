@@ -2,7 +2,7 @@
  * Model dependencies
  */
 const CasaModel = require('../../models/entities/casa');
-const Controller = require('./controller')
+const Controller = require('../controller')
 
 /**
  * Controller for the Casa model
