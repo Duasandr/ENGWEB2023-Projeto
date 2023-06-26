@@ -10,7 +10,7 @@ const { EntidadeController } = require('../controllers/entities/entidade')
  * @extends Controller
  * @type {EntidadeController}
  */
-const controller = new EntidadeController()
+const Entidade = new EntidadeController()
 
 /**
  * Callback for the index api/entidades route.
@@ -20,12 +20,13 @@ const controller = new EntidadeController()
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.index = async (req, res, next) => {
-    try{
-        const documentArray = await controller.getAll()
-        res.status(200).jsonp({ entidades: documentArray })
-    } catch (err) {
-        console.error(err.stack)
-        res.status(500).jsonp({ error: err.message })
+exports.entidades = async (req, res, next) => {
+    try {
+        const documents = Entidade.getAll()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
 }

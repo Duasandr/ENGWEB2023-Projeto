@@ -10,7 +10,7 @@ const { CasaController } = require('../controllers/entities/casa')
  * @extends Controller
  * @type {CasaController}
  */
-const controller = new CasaController()
+const Casa = new CasaController()
 
 /**
  * Callback for the index api/casas route.
@@ -20,12 +20,13 @@ const controller = new CasaController()
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.index = async (req, res, next) => {
-    try{
-        const documentArray = await controller.getAll()
-        res.status(200).jsonp({ casas: documentArray })
-    } catch (err) {
-        console.error(err.stack)
-        res.status(500).jsonp({ error: err.message })
+exports.casas = async (req, res, next) => {
+    try {
+        const documents = Casa.getAll()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
 }

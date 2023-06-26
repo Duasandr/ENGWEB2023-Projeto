@@ -10,7 +10,7 @@ const { DataController } = require('../controllers/entities/data')
  * @extends Controller
  * @type {DataController}
  */
-const controller = new DataController()
+const Data = new DataController()
 
 /**
  * Callback for the index api/datas route.
@@ -20,12 +20,13 @@ const controller = new DataController()
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.index = async (req, res, next) => {
-    try{
-        const documentArray = await controller.getAll()
-        res.status(200).jsonp({ datas: documentArray })
-    } catch (err) {
-        console.error(err.stack)
-        res.status(500).jsonp({ error: err.message })
+exports.datas = async (req, res, next) => {
+    try {
+        const documents = Data.getAll()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
 }

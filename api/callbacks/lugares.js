@@ -10,7 +10,7 @@ const { LugarController } = require('../controllers/entities/lugar')
  * @extends Controller
  * @type {LugarController}
  */
-const controller = new LugarController()
+const Lugar = new LugarController()
 
 /**
  * Callback for the index api/lugares route.
@@ -20,12 +20,13 @@ const controller = new LugarController()
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.index = async (req, res, next) => {
-    try{
-        const documentArray = await controller.getAll()
-        res.status(200).jsonp({ lugares: documentArray })
-    } catch (err) {
-        console.error(err.stack)
-        res.status(500).jsonp({ error: err.message })
+exports.lugares = async (req, res, next) => {
+    try {
+        const documents = Lugar.getAll()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
 }

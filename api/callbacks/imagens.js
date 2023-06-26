@@ -10,7 +10,7 @@ const { ImagemController } = require('../controllers/entities/imagem')
  * @extends Controller
  * @type {ImagemController}
  */
-const controller = new ImagemController()
+const Imagem = new ImagemController()
 
 /**
  * Callback for the index api/imagens route.
@@ -20,12 +20,13 @@ const controller = new ImagemController()
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.index = async (req, res, next) => {
-    try{
-        const documentArray = await controller.getAll()
-        res.status(200).jsonp({ imagens: documentArray })
-    } catch (err) {
-        console.error(err.stack)
-        res.status(500).jsonp({ error: err.message })
+exports.imagens = async (req, res, next) => {
+    try {
+        const documents = Imagem.getAll()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
 }

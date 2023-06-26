@@ -10,7 +10,7 @@ const { EnfiteutaController } = require('../controllers/entities/enfiteuta')
  * @extends Controller
  * @type {EnfiteutaController}
  */
-const controller = new EnfiteutaController()
+const Enfiteuta = new EnfiteutaController()
 
 /**
  * Callback for the index api/enfiteutas route.
@@ -20,12 +20,13 @@ const controller = new EnfiteutaController()
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.index = async (req, res, next) => {
-    try{
-        const documentArray = await controller.getAll()
-        res.status(200).jsonp({ enfiteutas: documentArray })
-    } catch (err) {
-        console.error(err.stack)
-        res.status(500).jsonp({ error: err.message })
+exports.enfiteutas = async (req, res, next) => {
+    try {
+        const documents = Enfiteuta.getAll()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
 }
