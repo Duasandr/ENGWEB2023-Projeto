@@ -128,5 +128,5 @@ dist
 
 # dependencies
 node_modules
-.vscode/settings.json
-.idea/ENGWEB2023-Projeto.iml
+.vscode/
+.idea/
