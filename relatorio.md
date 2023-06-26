@@ -71,13 +71,11 @@ foram definidos os seguintes ```Schemas``` em ```mongoose```:
 * ```rua```: contém o nome, número e lista de parágrafos;
 * ```imagem```: contém o ```path``` e a legenda;
 * ```casa```: contém o número, foro, descrição e vista;
-* ```lugar```;
-* ```data```;
-* ```entidade```: contém o nome e tipo de entidade. O tipo de entidade é um tipo enumerado com os seguintes valores: ```pessoa```, ```instituição```, ```empresa``` e ```família```;
-* ```enfiteuta```;
+* ```entidade```: contém o nome da entidade e o tipo que pode ser ```pessoa```, ```instituição```, ```empresa``` ou ```família```;
 * ```post```: contém o título, texto, data de criação, data de edição;
 * ```comentario```: contém o texto, data de criação, data de edição.
 * ```utilizador```: contém o nome, email, filiação, nível, data de registo, data de ultimo acesso e password.
+* ```lugar```, ```data```, ```enfiteuta```, ```pessoa```, ```instituição```, ```empresa```, ```família```: contém apenas um atributo descritivo. Foi apenas considerado este atributo por não haver mais informação disponível nos ficheiros XML. No entanto, estes modelos permitem a extensão da informação.
 
 
 ## 3. Conclusão
