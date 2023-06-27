@@ -63,19 +63,32 @@ Deste modo permite a separação da informação em diferentes coleções, o que
 
 #### 2.4.1. Modelos e Controladores
 
-Para cada coleção foi criado um modelo e um controlador. O modelo é responsável pela definição da estrutura dos documentos da coleção e o controlador é responsável pela manipulação dos documentos da coleção. 
+Foi criada uma coleção denominada de ```ruas``` para gurdar a informação extraida dos ficheiros XML. 
 
-Com base no modelo ER concebido depois da análise dos ficheiros XML e do problema em questão, 
-foram definidos os seguintes ```Schemas``` em ```mongoose```:
+Com base no modelo apresentado nos ficheiros do dataset, foram criados os seguintes modelos:
 
-* ```rua```: contém o nome, número e lista de parágrafos;
+* ```rua```: contém o nome, número e lista de parágrafos, lista de casas, lista de imagens e lista de referências;
 * ```imagem```: contém o ```path``` e a legenda;
 * ```casa```: contém o número, foro, descrição e vista;
-* ```entidade```: contém o nome da entidade e o tipo que pode ser ```pessoa```, ```instituição```, ```empresa``` ou ```família```;
-* ```post```: contém o título, texto, data de criação, data de edição;
-* ```comentario```: contém o texto, data de criação, data de edição.
-* ```utilizador```: contém o nome, email, filiação, nível, data de registo, data de ultimo acesso e password.
-* ```lugar```, ```data```, ```enfiteuta```, ```pessoa```, ```instituição```, ```empresa```, ```família```: contém apenas um atributo descritivo. Foi apenas considerado este atributo por não haver mais informação disponível nos ficheiros XML. No entanto, estes modelos permitem a extensão da informação.
+* ```referência```: contém o tipo e texto da referência;
+
+O modelo ```rua``` utiliza os modelos ```imagem```, ```casa``` e ```referência``` para definir a estrutura dos documentos. E este recebe um controlador que permite a manipulação dos documentos da coleção.
+
+#### 2.4.2. Rotas
+
+A API de dados disponibiliza da rota ```/api/ruas``` que permite a manipulação dos documentos da coleção ```ruas```. Esta rota permite a manipulação dos documentos da coleção.
+
+Encontram-se disponíveis as seguintes rotas:
+
+* ```GET /api/ruas```: retorna a lista de ruas;
+* ```GET /api/ruas/:id```: retorna o documento com o id especificado;
+* ```POST /api/ruas```: cria um novo documento;
+* ```POST /api/ruas/update```: atualiza o documento com o id especificado;
+* ```POST /api/ruas/delete```: elimina o documento com o id especificado;
+
+Nestas rotas são utilazadas callbacks que populam o ```request``` com o resultado das operações, passando a verificação do resultado para o middleware seguinte.
+
+Em muitas rotas é utilizado a mesma callback no final do pipeline horizontal de middlware para responder ao pedido. Esta callback é a ```handleResponse```que verifica a existência de erros ou dados obtidos e responde ao pedido com o resultado.
 
 
 ## 3. Conclusão
