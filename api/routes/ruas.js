@@ -18,6 +18,7 @@ router.get('/', cb.ruas, generic.handleResponse)
  * @details This route returns all Lugar documents that reference a Rua document.
  */
 router.get('/lugares', cb.listLugares, generic.handleResponse)
+router.get('/entidades', cb.listEntidades, generic.handleResponse)
 
 // POST routes
 

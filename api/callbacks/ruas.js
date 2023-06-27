@@ -111,14 +111,52 @@ exports.deleteRua = async (req, res, next) => {
  * @param {*} next - Express next middleware function.
  */
 exports.listLugares = async (req, res, next) => {
+    var order = 1
+    
+    if(req.order) {
+        order = req.order
+    }
 
     try {
-        const documents = await RuaController.listLugares()
+        const documents = await RuaController.listLugares(order)
         req.data = documents
     } catch (error) {
         req.error = error
     } finally {
         next()
     }
+}
 
+exports.listDatas = async (req, res, next) => {
+    var order = 1
+    
+    if(req.order) {
+        order = req.order
+    }
+
+    try {
+        const documents = await RuaController.listDatas(order)
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
+    }
+}
+
+exports.listEntidades = async (req, res, next) => {
+    var order = 1
+
+    if(req.order) {
+        order = req.order
+    }
+
+    try {
+        const documents = await RuaController.listEntidades(order)
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
+    }
 }

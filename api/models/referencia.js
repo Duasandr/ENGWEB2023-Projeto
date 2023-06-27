@@ -12,7 +12,7 @@ const Schema = mongoose.Schema
  */
 const ReferenciaSchema = new Schema({
     "_id": { type: String },
-    "tipo": { type: String, required: true, enum: ['data', 'lugar', 'empresa', 'familia', 'instituicao', 'pessoa'] },
+    "tipo": { type: String, required: true, enum: ['data', 'lugar', 'empresa', 'família', 'instituição', 'pessoa'] },
     'texto': { type: String, required: true }
 })
 

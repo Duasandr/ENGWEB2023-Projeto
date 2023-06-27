@@ -1,0 +1,52 @@
+doctype html 
+
+html
+    head
+        title MRB
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet" href="/stylesheets/w3.css")
+        link(rel="stylesheet" href="/stylesheets/w3-theme-blue-grey.css")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+    body 
+        // Page Container
+        .w3-container.w3-padding-large.w3-align-center(style="max-width:800px;margin:auto")
+            .w3-card.w3-round.w3-white
+                .w3-container
+                    h4.w3-center Novo Registo 
+                    hr
+                    form(action="/register" method="post" enctype="multipart/form-data")
+                        .w3-section
+                            i.fa.fa-user 
+                            label  Nome
+                            input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Username" name="username" required)
+                            br
+
+                            i.fa.fa-at
+                            label  Email
+                            input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Email" name="email" required)
+                            br
+
+                            i.fa.fa-image 
+                            label  Avatar 
+                            input.w3-input.w3-border.w3-margin-bottom(type="file" name="avatar")
+
+                            i.fa.fa-handshake-o 
+                            label  Filiação
+                            select.w3-select(name="affiliation" required)
+                                option(value="" disabled selected) Escolha uma opção
+                                option(value="student") Estudante
+                                option(value="teacher") Professor
+                                option(value="other") Outro
+                            br
+                            br
+
+                            i.fa.fa-lock
+                            label  Password
+                            input.w3-input.w3-border.w3-margin-bottom(type="password" placeholder="Password" name="password" required)
+                            button.w3-button.w3-block.w3-green.w3-section.w3-padding(type="submit") Registar
+
+                    if(error)
+                        .w3-container.w3-red
+                            p #{error}

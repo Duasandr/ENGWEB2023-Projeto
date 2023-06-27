@@ -1,0 +1,86 @@
+extends ../../index 
+
+block middle-column 
+    script.
+        $(document).ready(function(){
+            $('input[type="radio"]').click(function(){
+                var formSelected = $(this).val(); 
+                if(formSelected == 'xml'){
+                    $('#xml').show();
+                    $('#manual').hide();
+                }
+                else{
+                    $('#xml').hide();
+                    $('#manual').show();
+                }
+            });
+        });
+
+    // Middle Column
+    .w3-col.m7
+        .w3-container.w3-card.w3-white.w3-round.w3-margin
+            br
+            form(id="options")
+                input.w3-radio(type="radio" name="choice" value="manual" checked)
+                label Manual
+                br
+                input.w3-radio(type="radio" name="choice" value="xml")
+                label Ficheiro XML
+            br
+
+            form(id="xml" action="/ruas/add/xml" method="post" enctype="multipart/form-data" style="display:none")
+                label(for="file") Ficheiros: 
+                input(type="file" name="files" id="files" multiple)
+                br
+
+                button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Adicionar Ruas
+
+            form(id="manual" action="/ruas/add" method="post" enctype="multipart/form-data")
+                label Nome:
+                input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Nome da rua" name="nome" required)
+
+                label Número:
+                input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Número da rua" name="numero" required)
+
+                label Descrição:
+                textarea.w3-input.w3-border.w3-margin-bottom( placeholder="Descrição da rua" name="paras" required)
+
+                label Casas:
+                br
+                button.w3-button.w3-theme-d1.w3-margin-bottom(type="button" id="addCasaForm") Adicionar Casa
+                .w3-container.w3-card.w3-white.w3-round.w3-margin(id="casasContainer")
+                
+                label Figuras:
+                //input(type="file" name="file" id="file" multiple)
+                br
+
+                button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Adicionar Rua
+
+        if(error)
+            .w3-container.w3-red
+                p #{error}
+        else if(success)
+            .w3-container.w3-green
+                p #{success}
+
+    script. 
+        $(document).ready(function(){
+            $("#addCasaForm").click(function(){
+                $("#casasContainer").append(`
+                    <div class="w3-container">
+                        <br>
+                        <label>Numero</label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Numero da casa" name="casasNumero" required>
+                        <label>Foro</label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Foro" name="casasForo" required>
+                        <label>Enfiteuta</label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enfiteuta" name="casasEnfiteuta" required>
+                        <label>Descrição:</label>
+                        <textarea class="w3-input w3-border w3-margin-bottom" placeholder="Descrição da casa" name="casasDesc" required></textarea>
+                    </div>
+                `);
+            });
+        });
+
+
+
