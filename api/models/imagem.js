@@ -14,10 +14,9 @@ const Schema = mongoose.Schema
  * @property {String} legenda - Image caption
  */
 const ImagemSchema = new Schema({
-    _id: String,
-    "idReferencia": { type: String, required: true, ref: 'Rua' },
+    "_id": { type: String },
     "path": { type: String, required: true },
     "legenda": String
 })
 
-module.exports = mongoose.model('Imagem', ImagemSchema, 'imagens')
+module.exports = ImagemSchema

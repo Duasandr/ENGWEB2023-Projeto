@@ -17,18 +17,14 @@ router.get('/', cb.ruas, generic.handleResponse)
  * GET route for the api/ruas/lugares/?idRua=id route.
  * @details This route returns all Lugar documents that reference a Rua document.
  */
-router.get('/lugares', cb.lugaresByRua, generic.handleResponse)
+router.get('/lugares', cb.listLugares, generic.handleResponse)
 
-/**
- * GET route for the api/ruas/datas/?idRua=id route.
- * @details This route returns all Data documents that reference a Rua document.
- */
-router.get('/datas', cb.datasByRua, generic.handleResponse)
+// POST routes
 
-/**
- * GET route for the api/ruas/entidades/?idRua=id route.
- * @details This route returns all Entidade documents that reference a Rua document.
- */
-router.get('/entidades', cb.entidadesByRua, generic.handleResponse)
+router.post('/', cb.createRua, generic.handleResponse)
+router.post('/update/:id', cb.updateRua, generic.handleResponse)
+router.post('/delete/:id', cb.deleteRua, generic.handleResponse)
+
+
 
 module.exports = router;

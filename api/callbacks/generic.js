@@ -19,6 +19,6 @@ exports.handleResponse = (req, res, next) => {
         console.log(req.error)
         res.status(400).jsonp({ error: req.error.message})
     } else {
-        res.status(500).jsonp({ error: "Erro interno do servidor."})
+        res.status(500).jsonp({error: 'Internal Server Error'})
     }
 }

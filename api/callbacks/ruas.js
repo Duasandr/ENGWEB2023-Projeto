@@ -3,38 +3,8 @@
 /**
  * Module dependencies
  */
-const { RuaController } = require('../controllers/entities/rua')
-const { RuaLugarController } = require('../controllers/mappings/rua_lugar')
-const { RuaDataController } = require('../controllers/mappings/rua_data')
-const { RuaEntidadeController } = require('../controllers/mappings/rua_entidade')
-
-/**
- * Controller for the Rua model
- * @extends Controller
- * @type {RuaController}
- */
-const Rua = new RuaController()
-
-/**
- * Controller for the RuaLugar model
- * @extends Controller
- * @type {RuaLugarController}
- */
-const RuaLugar = new RuaLugarController()
-
-/**
- * Controller for the RuaData model
- * @extends Controller
- * @type {RuaDataController}
- */
-const RuaData = new RuaDataController()
-
-/**
- * Controller for the RuaEntidade model
- * @extends Controller
- * @type {RuaEntidadeController}
- */
-const RuaEntidade = new RuaEntidadeController()
+const RuaController = require('../controllers/rua')
+const e = require('express')
 
 /**
  * Callback for the index /ruas route.
@@ -45,13 +15,90 @@ const RuaEntidade = new RuaEntidadeController()
  */
 exports.ruas = async (req, res, next) => {
     try {
-        const documents = await Rua.getAll()
+        const documents = await RuaController.list()
         req.data = documents
     } catch (error) {
         req.error = error
     } finally {
         next()
     }
+}
+
+/**
+ * Creates a document or multiple documents.
+ * @details It adds a JSON object with the created document(s) to the ```req``` inside a ```data``` property.
+ * It expects that the ```req``` has a ```body``` property with the document(s) to be created.
+ * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
+ * It hands over the request to the next middleware function.
+ * @param {*} req - Express request object.
+ * @param {*} res - Express response object.
+ * @param {*} next - Express next middleware function.
+ */
+exports.createRua = async (req, res, next) => {
+    const rua = req.body
+
+    try {
+        const document = await RuaController.create(rua)
+        req.data = document
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
+    }
+}
+
+/**
+ * Updates a document.
+ * @details It adds a JSON object with the updated document to the ```req``` inside a ```data``` property.
+ * It expects that the ```req``` has a ```body``` property with the document to be updated and an ```id``` property with the document's id.
+ * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
+ * It hands over the request to the next middleware function.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.updateRua = async (req, res, next) => {
+    const updated = req.body
+    const id = req.params.id
+
+    try {
+        const document = await RuaController.update(id, updated)
+        req.data = document
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
+    }
+}
+
+/**
+ * Deletes a document.
+ * @details It adds a JSON object with the deleted document to the ```req``` inside a ```data``` property.
+ * It expects that the ```req``` has an ```id``` property with the document's id.
+ * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.deleteRua = async (req, res, next) => {
+    const id = req.params.id
+
+    try {
+
+        const document = await RuaController.delete(id)
+
+        if (document) {
+            req.data = document
+        } else {
+            req.error = 'deleteRua: id = ' + id + ' not found'
+            req.error.message = 'Rua não encontrada.'
+        }
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
+    }
+
 }
 
 /**
@@ -63,65 +110,15 @@ exports.ruas = async (req, res, next) => {
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.lugaresByRua = async (req, res, next) => {
-    const query = req.query
+exports.listLugares = async (req, res, next) => {
 
-    if (!query || !query.idRua) {
-        req.error = 'Parametros em falta.'
+    try {
+        const documents = await RuaController.listLugares()
+        req.data = documents
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
     }
-    else {
-        try {
-            const documents = await RuaLugar.getLugaresByRuaId(query.idRua)
-            req.data = documents
-        } catch (error) {
-            req.error = error
-        } finally {
-            next()
-        }
-    }
-}
 
-/**
- * Retrieves all Entidade documents that reference a Rua document.
- * @details It adds a JSON object with the retrieved documents to the ```req``` inside a ```data``` property.
- * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
- * It hands over the request to the next middleware function.
- * @param {*} req - Express request object.
- * @param {*} res - Express response object.
- * @param {*} next - Express next middleware function.
- */
-exports.datasByRua = async (req, res, next) => {
-    const query = req.query
-
-    if (!query || !query.idRua) {
-        req.error = 'Parametros em falta.'
-    }
-    else {
-        try {
-            const documents = await RuaData.getDatasByRuaId(query.idRua)
-            req.data = documents
-        } catch (error) {
-            req.error = error
-        } finally {
-            next()
-        }
-    }
-}
-
-exports.entidadesByRua = async (req, res, next) => {
-    const query = req.query
-
-    if (!query || !query.idRua) {
-        req.error = 'Parametros em falta.'
-    }
-    else {
-        try {
-            const documents = await RuaEntidade.getEntidadesByRuaId(query.idRua)
-            req.data = documents
-        } catch (error) {
-            req.error = error
-        } finally {
-            next()
-        }
-    }
 }
