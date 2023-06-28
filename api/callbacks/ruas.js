@@ -4,7 +4,6 @@
  * Module dependencies
  */
 const RuaController = require('../controllers/rua')
-const e = require('express')
 
 /**
  * Callback for the index /ruas route.
@@ -14,14 +13,25 @@ const e = require('express')
  * @param {*} next - Express next middleware function.
  */
 exports.ruas = async (req, res, next) => {
-    try {
-        const documents = await RuaController.list()
-        req.data = documents
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
-    }
+    RuaController.list()
+        .then((documents) => { req.data = documents })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
+}
+
+exports.rua = async (req, res, next) => {
+    const id = req.params.id
+
+    await RuaController.get(id)
+        .then((document) => {
+            if(!document) { 
+                req.error = { message: 'rua ' + id + ' não foi encontrada' }
+            } else { 
+                req.data = document 
+            }
+        })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }
 
 /**
@@ -37,14 +47,10 @@ exports.ruas = async (req, res, next) => {
 exports.createRua = async (req, res, next) => {
     const rua = req.body
 
-    try {
-        const document = await RuaController.create(rua)
-        req.data = document
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
-    }
+    RuaController.create(rua)
+        .then((document) => { req.data = document })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }
 
 /**
@@ -61,14 +67,10 @@ exports.updateRua = async (req, res, next) => {
     const updated = req.body
     const id = req.params.id
 
-    try {
-        const document = await RuaController.update(id, updated)
-        req.data = document
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
-    }
+    RuaController.update(id, updated)
+        .then((document) => { req.data = document })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }
 
 /**
@@ -83,22 +85,10 @@ exports.updateRua = async (req, res, next) => {
 exports.deleteRua = async (req, res, next) => {
     const id = req.params.id
 
-    try {
-
-        const document = await RuaController.delete(id)
-
-        if (document) {
-            req.data = document
-        } else {
-            req.error = 'deleteRua: id = ' + id + ' not found'
-            req.error.message = 'Rua não encontrada.'
-        }
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
-    }
-
+    RuaController.delete(id)
+        .then((document) => { req.data = document })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }
 
 /**
@@ -117,14 +107,10 @@ exports.listLugares = async (req, res, next) => {
         order = req.order
     }
 
-    try {
-        const documents = await RuaController.listLugares(order)
-        req.data = documents
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
-    }
+    RuaController.listLugares(order)
+        .then((documents) => { req.data = documents })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }
 
 exports.listDatas = async (req, res, next) => {
@@ -134,14 +120,10 @@ exports.listDatas = async (req, res, next) => {
         order = req.order
     }
 
-    try {
-        const documents = await RuaController.listDatas(order)
-        req.data = documents
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
-    }
+    RuaController.listDatas(order)
+        .then((documents) => { req.data = documents })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }
 
 exports.listEntidades = async (req, res, next) => {
@@ -151,12 +133,37 @@ exports.listEntidades = async (req, res, next) => {
         order = req.order
     }
 
-    try {
-        const documents = await RuaController.listEntidades(order)
-        req.data = documents
-    } catch (error) {
-        req.error = error
-    } finally {
-        next()
+    RuaController.listEntidades(order)
+        .then((documents) => { req.data = documents })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
+}
+
+exports.listPosts = async (req, res, next) => {
+    var sortBy = "data_criado"
+    var order = 1
+
+    if(req.query) {
+        if(req.query.order) {
+            order = req.query.order
+        }
+        if(req.query.sortBy) {
+            field = req.query.sortBy
+        }
     }
+
+    RuaController.listPosts(sortBy, order)
+        .then((documents) => { req.data = documents })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
+}
+
+exports.addComment = async (req, res, next) => {
+    const post_id = req.params.id
+    const comment = req.body
+
+    RuaController.addComment(post_id, comment)
+        .then((document) => { req.data = document })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
 }

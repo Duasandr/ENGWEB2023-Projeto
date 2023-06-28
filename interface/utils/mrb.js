@@ -147,7 +147,7 @@ extractCasas = (casasElements, refs) => {
         })
 
         if (descElement) {
-            casa.desc = extractParas(descElement.querySelectorAll('para'), refs)
+            casa.descricao = extractParas(descElement.querySelectorAll('para'), refs)
         }
 
         casas.push(casa)

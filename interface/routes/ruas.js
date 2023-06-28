@@ -19,6 +19,7 @@ const upload = multer({ storage: storage })
 // GET
 
 router.get('/', cb.getRuas)
+router.get('/get/:id', cb.getRua)
 router.get('/add', cb.getAdd)
 
 // POST

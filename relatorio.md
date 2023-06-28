@@ -54,23 +54,24 @@ Para tal, foi criada uma script em JavaScript que lê os ficheiros XML e guarda 
 
 A API de dados foi desenvolvida em Node.js. Esta API permite a manipulação da informação guardada no MongoDB. Para tal, foi utilizado o módulo ```mongoose``` que permite a ligação ao MongoDB e a manipulação dos dados.
 
-Como decisão de implementação, foi decidido que a API consegue manipular as seguintes coleções:
+Como decisão de implementação, foi decidido que a API consegue manipular apenas a coleção ```ruas```. Esta coleção contém a informação extraída do dataset bem como a informação relativa aos posts e comentarios.
 
-Ruas, Imagens, Casas, Lugares, Datas, Entidades, Enfiteutas, Posts e Comentários.
+Esta decisão foi tomada de forma a tirar proveito da flexibilidade que MongoDB e o modelo de dados não relacional oferecem.
 
-Deste modo permite a separação da informação em diferentes coleções, o que permite uma maior flexibilidade na manipulação da informação, bem como a pssibilidade de extender os tipos de dados. As coleções ```lugares```, ```datas```  foram criadas de modo a facilitar a implementação da navegação por índice topomínico e cronológico ([RM3](#411-requisitos-de-manipulação) e [RM4](#411-requisitos-de-manipulação)). Foi consideredo que a navegação por lugar e data é relativa às referências encontradas nas descrições presentes nos ficheiros XML.
-
+Importante referir que a API de dados não permite a manipulação da informação relativa aos utilizadores. Esta informação é manipulada pelo serviço de autenticação que está associado a uma base de dados separada.
 
 #### 2.4.1. Modelos e Controladores
 
 Foi criada uma coleção denominada de ```ruas``` para gurdar a informação extraida dos ficheiros XML. 
 
-Com base no modelo apresentado nos ficheiros do dataset, foram criados os seguintes modelos:
+Com base nos ficheiros do dataset, foram criados os seguintes modelos:
 
 * ```rua```: contém o nome, número e lista de parágrafos, lista de casas, lista de imagens e lista de referências;
 * ```imagem```: contém o ```path``` e a legenda;
 * ```casa```: contém o número, foro, descrição e vista;
 * ```referência```: contém o tipo e texto da referência;
+* ```post```: contém o título, texto, data de criação, data da última modificação, autor e lista de comentários;
+* ```comentário```: contém o texto, data de criação, data da última modificação e autor;
 
 O modelo ```rua``` utiliza os modelos ```imagem```, ```casa``` e ```referência``` para definir a estrutura dos documentos. E este recebe um controlador que permite a manipulação dos documentos da coleção.
 

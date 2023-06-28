@@ -34,7 +34,7 @@ exports.listReferenciasSorted = (tipo, order = 1) => {
         return RuaModel.aggregate([
             { $project: { "referencias": 1 } },
             { $unwind: "$referencias" },
-            { $match: { "refrencias.tipo": { $in: tipos } } },
+            { $match: { "referencias.tipo": { $in: tipos } } },
             { $group: { _id: "$referencias.tipo", nomes: { $addToSet: "$referencias.texto" } } },
             { $sort: { _id: order } }
         ]).exec()
@@ -59,4 +59,37 @@ exports.listEntidades = (order = 1) => {
 
 exports.listDatas = (order = 1) => {
     return this.listReferenciasSorted("data", order)
+}
+
+exports.listPostsByTitulo = (order = 1) => {
+    return RuaModel.aggregate([
+        { $unwind: "$posts" },
+        { $sort: { "posts.titulo": 1 } },
+        { $group: { _id: "$posts.titulo", posts: { $push: "$posts" } } },
+        { $sort: { _id: 1 } }
+    ]).exec()
+}
+
+exports.listPostsByData = (order = 1) => {
+    return RuaModel.aggregate([
+        { $unwind: "$posts" },
+        { $sort: { "posts.data_criado": 1 } },
+        { $group: { _id: "$posts.data_criado", posts: { $push: "$posts" } } },
+        { $sort: { _id: 1 } }
+    ]).exec()
+}
+
+exports.listPosts = (sortBy = "data_criado", order = 1) => {
+    if(sortBy === "titulo") {
+        return this.listPostsByTitulo(order)
+    }
+    if(sortBy === "data_criado") {
+        return this.listPostsByData(order)
+    }
+}
+
+exports.addComment = (post_id, comment) => {
+   return RuaModel.find({ "posts._id": post_id })
+            .updateOne({ $push: { "posts.$.comentarios": comment } })
+            .exec()
 }

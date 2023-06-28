@@ -1,0 +1,35 @@
+extends ../index
+
+block middle-column
+    // Middle Column
+    .w3-col.m7
+        .w3-row-padding
+
+            // Posts
+            each group in data
+                each post in group.posts
+                    .w3-container.w3-card.w3-white.w3-round.w3-margin
+                        br
+                        span.w3-right.w3-opacity #{post.data_criado}
+                        h3=post.titulo
+                        h5=post.autor
+                        .w3-row-padding(style="margin:0 -16px")
+                            each imagem in post.imagens
+                                - const path = '#'
+                                .w3-row
+                                    img.w3-margin-bottom(src=path style="width:100%" alt=imagem.legenda)
+                        br
+                        p=post.texto
+                        br
+                        
+                        h5 Comentários
+                        if post.comentarios.length == 0
+                            p Ainda não há comentários
+                
+                        each comentario in post.comentarios 
+                            hr
+                            span.w3-right.w3-opacity #{comentario.data_modificado}
+                            h6 #{comentario.autor}
+                            p #{comentario.texto}
+                        
+                        a.w3-button.w3-theme-d1.w3-margin-bottom(href="posts/comment/" + post._id) Comentar

@@ -18,6 +18,20 @@ exports.getRuas = (req, res, next) => {
         })
 }
 
+exports.getRua = (req, res, next) => {
+    axios({
+        method: 'get',
+        url: 'http://localhost:13002/api/ruas/get/' + req.params.id
+    })
+        .then((response) => {
+            res.render('ruas/details', { rua: response.data })
+        })
+        .catch((error) => {
+            console.log(error.message)
+            res.render('error', { error: "Não foi possível obter a rua" })
+        })
+}
+
 exports.getAdd = (req, res, next) => {
     res.render('ruas/forms/add', {})
 }

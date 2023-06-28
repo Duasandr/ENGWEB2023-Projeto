@@ -6,6 +6,7 @@ const Schema = mongoose.Schema
 const ImagemSchema = require('./imagem')
 const CasaSchema = require('./casa')
 const ReferenciaSchema = require('./referencia')
+const PostSchema = require('./post')
 
 const RuaSchema = new Schema({
     _id: String,
@@ -15,6 +16,7 @@ const RuaSchema = new Schema({
     "imagens": [ImagemSchema],
     "casas": [CasaSchema],
     "referencias": [ReferenciaSchema],
+    "posts": [PostSchema]
 })
 
 // Export model with name, schema and collection

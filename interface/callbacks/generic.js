@@ -13,13 +13,10 @@
  * @param {*} next - Express next middleware function.
  */
 exports.handleResponse = (req, res, next) => {
-    if(req.error) {
+    if (req.error) {
         console.log(req.error)
-        res.status(400).jsonp({ error: req.error.message })
-    } else if (req.data) {
-        res.status(200).jsonp(req.data)
+        res.status(400)
     } else {
-        res.error = { message: "No data or error property in request object." }
-        res.status(500).jsonp({})
+        res.status(200)
     }
 }

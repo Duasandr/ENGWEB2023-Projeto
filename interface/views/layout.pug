@@ -19,10 +19,10 @@ html
             .w3-bar.w3-theme-d2.w3-left-align.w3-large
                 a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/')
                     i.glyphicon.glyphicon-home.w3-margin-right 
-                a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/street/add')
-                    i.glyphicon.glyphicon-file.w3-margin-right +
 
-        block content
+        // Page Container
+        .w3-container.w3-content(style="max-width:1400px;margin-top:80px")
+            block content
 
         // Footer 
         footer.w3-container.w3-theme-d3.w3-padding-16

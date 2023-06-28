@@ -6,9 +6,9 @@ block middle-column
         .w3-row-padding
 
         // Posts
-        if(error)
+        if(ruas.length == 0)
             .w3-container.w3-red
-                p #{error}
+                p Nenhuma rua para listar
 
         each rua in ruas 
             .w3-container.w3-card.w3-white.w3-round.w3-margin
@@ -24,7 +24,7 @@ block middle-column
                             img.w3-margin-bottom(src=path style="width:100%" alt=imagem.legenda)
                 each paragrafo in rua.paragrafos 
                     p=paragrafo
-                a(href="street/" + rua._id) 
+                a(href="ruas/get/" + rua._id) 
                     button.w3-button.w3-theme-d1.w3-margin-bottom(type="button")
                         i.fa.fa-thumbs-up View
                 button.w3-button.w3-theme-d2.w3-margin-bottom(type="button")
