@@ -20,10 +20,10 @@ const upload = multer({ storage: storage })
 
 router.get('/', cb.getPosts)
 router.get('/add', cb.getPostsAdd)
-router.get('/comment/get/:id', cb.getComment)
+router.get('/comments/add', cb.getCommentAdd)
 
 // POST
 router.post('/add', upload.array('files'), cb.postAdd)
-router.post('/comment/add/:id', cb.postComment)
+router.post('/comments/add', cb.postComment)
 
 module.exports = router;
