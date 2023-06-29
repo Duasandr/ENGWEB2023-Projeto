@@ -89,7 +89,15 @@ exports.listPosts = (sortBy = "data_criado", order = 1) => {
 }
 
 exports.addComment = (post_id, comment) => {
-   return RuaModel.find({ "posts._id": post_id })
+   return RuaModel
+            .find({ "posts._id": post_id })
             .updateOne({ $push: { "posts.$.comentarios": comment } })
+            .exec()
+}
+
+exports.addPost = (idRua, post) => {
+    return RuaModel
+            .find({ "_id": idRua })
+            .updateOne({ $push: { "posts": post } })
             .exec()
 }

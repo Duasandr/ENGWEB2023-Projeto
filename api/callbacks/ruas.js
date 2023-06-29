@@ -12,17 +12,17 @@ const RuaController = require('../controllers/rua')
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.ruas = async (req, res, next) => {
+exports.ruas = (req, res, next) => {
     RuaController.list()
         .then((documents) => { req.data = documents })
         .catch((error) => { req.error = error })
         .finally(() => { next() })
 }
 
-exports.rua = async (req, res, next) => {
+exports.rua = (req, res, next) => {
     const id = req.params.id
 
-    await RuaController.get(id)
+    RuaController.get(id)
         .then((document) => {
             if(!document) { 
                 req.error = { message: 'rua ' + id + ' não foi encontrada' }
@@ -44,7 +44,7 @@ exports.rua = async (req, res, next) => {
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.createRua = async (req, res, next) => {
+exports.createRua = (req, res, next) => {
     const rua = req.body
 
     RuaController.create(rua)
@@ -63,7 +63,7 @@ exports.createRua = async (req, res, next) => {
  * @param {*} res 
  * @param {*} next 
  */
-exports.updateRua = async (req, res, next) => {
+exports.updateRua = (req, res, next) => {
     const updated = req.body
     const id = req.params.id
 
@@ -82,7 +82,7 @@ exports.updateRua = async (req, res, next) => {
  * @param {*} res 
  * @param {*} next 
  */
-exports.deleteRua = async (req, res, next) => {
+exports.deleteRua = (req, res, next) => {
     const id = req.params.id
 
     RuaController.delete(id)
@@ -100,7 +100,7 @@ exports.deleteRua = async (req, res, next) => {
  * @param {*} res - Express response object.
  * @param {*} next - Express next middleware function.
  */
-exports.listLugares = async (req, res, next) => {
+exports.listLugares = (req, res, next) => {
     var order = 1
     
     if(req.order) {
@@ -113,7 +113,7 @@ exports.listLugares = async (req, res, next) => {
         .finally(() => { next() })
 }
 
-exports.listDatas = async (req, res, next) => {
+exports.listDatas = (req, res, next) => {
     var order = 1
     
     if(req.order) {
@@ -126,7 +126,7 @@ exports.listDatas = async (req, res, next) => {
         .finally(() => { next() })
 }
 
-exports.listEntidades = async (req, res, next) => {
+exports.listEntidades = (req, res, next) => {
     var order = 1
 
     if(req.order) {
@@ -139,7 +139,7 @@ exports.listEntidades = async (req, res, next) => {
         .finally(() => { next() })
 }
 
-exports.listPosts = async (req, res, next) => {
+exports.listPosts = (req, res, next) => {
     var sortBy = "data_criado"
     var order = 1
 
@@ -158,7 +158,7 @@ exports.listPosts = async (req, res, next) => {
         .finally(() => { next() })
 }
 
-exports.addComment = async (req, res, next) => {
+exports.addComment = (req, res, next) => {
     const post_id = req.params.id
     const comment = req.body
 
@@ -167,3 +167,13 @@ exports.addComment = async (req, res, next) => {
         .catch((error) => { req.error = error })
         .finally(() => { next() })
 }
+
+exports.addPosts = (req, res, next) => {
+    const idRua = req.query.idRua
+    const post = req.body
+
+    RuaController.addPost(idRua, post)
+        .then((document) => { req.data = document })
+        .catch((error) => { req.error = error })
+        .finally(() => { next() })
+} 

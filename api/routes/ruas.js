@@ -29,6 +29,7 @@ router.post('/update/:id', cb.updateRua, generic.handleResponse)
 router.post('/delete/:id', cb.deleteRua, generic.handleResponse)
 
 router.post('/posts/comment/:id', cb.addComment, generic.handleResponse)
+router.post('/posts/add', cb.addPosts, generic.handleResponse)
 
 
 module.exports = router;

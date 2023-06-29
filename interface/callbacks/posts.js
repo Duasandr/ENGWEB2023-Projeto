@@ -30,8 +30,8 @@ exports.getPostsAdd = (req, res, next) => {
 exports.postAdd = (req, res, next) => {
     const idRua = req.query.idRua
 
-    axios({ method: 'post', url: 'http://localhost:13002/api/ruas/posts/add/' + idRua, data: req.body })
-        .then((response) => { res.rediret('/posts') })
+    axios({ method: 'post', url: 'http://localhost:13002/api/ruas/posts/add?idRua=' + idRua, data: req.body })
+        .then((response) => { res.redirect('/posts') })
         .catch((error) => {
             console.log(error)
             res.render('posts/forms/add', { idRua: idRua , user: { username: "Teste" }, error: "Não foi possível criar o post." })
