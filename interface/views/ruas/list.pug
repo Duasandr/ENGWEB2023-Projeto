@@ -24,8 +24,8 @@ block middle-column
                             img.w3-margin-bottom(src=path style="width:100%" alt=imagem.legenda)
                 each paragrafo in rua.paragrafos 
                     p=paragrafo
-                a(href="ruas/get/" + rua._id) 
-                    button.w3-button.w3-theme-d1.w3-margin-bottom(type="button")
-                        i.fa.fa-thumbs-up View
-                button.w3-button.w3-theme-d2.w3-margin-bottom(type="button")
-                    i.fa.fa-comment Comment
+                
+                
+                a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="ruas/get/" + rua._id) View
+            
+                a.fa.fa-comment.w3-button.w3-theme-d1.w3-margin-bottom(href="posts/add?idRua=" + rua._id) Post

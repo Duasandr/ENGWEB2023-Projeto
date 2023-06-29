@@ -4,14 +4,17 @@ block middle-column
     // Middle Column
     .w3-col.m7
         .w3-row-padding
-            form(id="commentForm" action="/posts/add/" + idRua method="post" enctype="multipart/form-data")
+            form(id="postForm" action="/posts/add?idRua=" + idRua method="post" enctype="multipart/form-data")
                 input(type="text" name="autor" value=user.username hidden)
                 
+                label Título 
+                input.w3-input.w3-border.w3-margin-bottom(placeholder="Título" name='titulo' required)
+
                 label Tetxo:
-                textarea.w3-input.w3-border.w3-margin-bottom( placeholder="Texto" name="texto" required)
+                textarea.w3-input.w3-border.w3-margin-bottom(placeholder="Texto" name="texto" required)
                 
                 label Imagens: 
-                input(type="file" name="files" id="files" multiple)
+                input(type="file" name="files" multiple)
                 br
                 button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Postar
             

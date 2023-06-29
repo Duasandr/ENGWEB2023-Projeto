@@ -23,7 +23,7 @@ router.get('/add', cb.getPostsAdd)
 router.get('/comment/get/:id', cb.getComment)
 
 // POST
-router.post('/add/:id', upload.array('files'), cb.postAdd)
+router.post('/add', upload.array('files'), cb.postAdd)
 router.post('/comment/add/:id', cb.postComment)
 
 module.exports = router;

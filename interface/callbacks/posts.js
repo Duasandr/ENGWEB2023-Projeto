@@ -21,20 +21,20 @@ exports.getComment = (req, res, next) => {
 }
 
 exports.getPostsAdd = (req, res, next) => {
-    const idRua = req.params.id
+    const idRua = req.query.idRua
     res.render('posts/forms/add', { idRua: idRua , user: { username: "Teste" } })
 }
 
 // POST
 
 exports.postAdd = (req, res, next) => {
-    const idRua = req.params.id
+    const idRua = req.query.idRua
 
     axios({ method: 'post', url: 'http://localhost:13002/api/ruas/posts/add/' + idRua, data: req.body })
         .then((response) => { res.rediret('/posts') })
         .catch((error) => {
             console.log(error)
-            res.render('posts/forms/add', { error: "Não foi possível criar o post." })
+            res.render('posts/forms/add', { idRua: idRua , user: { username: "Teste" }, error: "Não foi possível criar o post." })
         })
 
 }
