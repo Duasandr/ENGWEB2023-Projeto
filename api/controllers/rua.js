@@ -3,29 +3,15 @@
  */
 const RuaModel = require('../models/rua');
 
-/**
- * 
- * @returns {Promise} Promise object represents the list of all ruas
- */
-exports.list = () => {
-    return RuaModel.find({}, {}, { sort: { nome: 1 } }).exec()
-}
+exports.list   = ()         => { return RuaModel.find({}, {}, { sort: { nome: 1 } }).exec() }
 
-exports.get = (id) => {
-    return RuaModel.findById(id).exec()
-}
+exports.get    = (id)       => { return RuaModel.findById(id).exec() }
 
-exports.create = (data) => {
-    return RuaModel.create(data)
-}
+exports.create = (data)     => { return RuaModel.create(data) }
 
-exports.update = (id, data) => {
-    return RuaModel.findByIdAndUpdate(id, data).exec()
-}
+exports.update = (id, data) => { return RuaModel.findByIdAndUpdate(id, data).exec() }
 
-exports.delete = (id) => {
-    return RuaModel.findByIdAndDelete(id).exec()
-}
+exports.delete = (id)       => { return RuaModel.findByIdAndDelete(id).exec() }
 
 exports.listReferenciasSorted = (tipo, order = 1) => {
     if (tipo === "entidade") {
@@ -49,19 +35,13 @@ exports.listReferenciasSorted = (tipo, order = 1) => {
     }
 }
 
-exports.listLugares = (order = 1) => {
-    return this.listReferenciasSorted("lugar", order)
-}
+exports.listLugares   = (order) => {  return this.listReferenciasSorted("lugar", order) }
 
-exports.listEntidades = (order = 1) => {
-    return this.listReferenciasSorted("entidade", order)
-}
+exports.listEntidades = (order) => { return this.listReferenciasSorted("entidade", order) }
 
-exports.listDatas = (order = 1) => {
-    return this.listReferenciasSorted("data", order)
-}
+exports.listDatas     = (order) => { return this.listReferenciasSorted("data", order) }
 
-exports.listPostsByTitulo = (order = 1) => {
+exports.listPostsByTitulo = (order) => {
     return RuaModel.aggregate([
         { $unwind: "$posts" },
         { $sort: { "posts.titulo": 1 } },
@@ -70,7 +50,7 @@ exports.listPostsByTitulo = (order = 1) => {
     ]).exec()
 }
 
-exports.listPostsByData = (order = 1) => {
+exports.listPostsByData = (order) => {
     return RuaModel.aggregate([
         { $unwind: "$posts" },
         { $sort: { "posts.data_criado": 1 } },
@@ -79,25 +59,25 @@ exports.listPostsByData = (order = 1) => {
     ]).exec()
 }
 
-exports.listPosts = (sortBy = "data_criado", order = 1) => {
-    if(sortBy === "titulo") {
+exports.listPosts = (sortBy = "data_criado", order = -1) => {
+    if (sortBy === "titulo") {
         return this.listPostsByTitulo(order)
     }
-    if(sortBy === "data_criado") {
+    if (sortBy === "data_criado") {
         return this.listPostsByData(order)
     }
 }
 
-exports.addComment = (post_id, comment) => {
-   return RuaModel
-            .find({ "posts._id": post_id })
-            .updateOne({ $push: { "posts.$.comentarios": comment } })
-            .exec()
+exports.addComment = (idPost, comment) => {
+    return RuaModel
+        .find({ "posts._id": idPost })
+        .updateOne({ $push: { "posts.$.comentarios": comment } })
+        .exec()
 }
 
 exports.addPost = (idRua, post) => {
     return RuaModel
-            .find({ "_id": idRua })
-            .updateOne({ $push: { "posts": post } })
-            .exec()
+        .find({ "_id": idRua })
+        .updateOne({ $push: { "posts": post } })
+        .exec()
 }
