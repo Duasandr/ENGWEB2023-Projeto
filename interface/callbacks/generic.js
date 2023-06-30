@@ -1,17 +1,7 @@
-/**
- * These are generic callbacks that can be used by any route
- */
+const axios = require('axios')
 
-/**
- * Handles the response from the database.
- * @details It receives the ```req``` object, and checks if it has an ```error``` property. 
- * If it does, it sends a 400 response with the error message. If it doesn't, it sends a 200 response with the data.
- * It should be used as the last middleware function in a route.
- * Check if the previous middleware functions added an ```error``` or a ```data``` property to the ```req``` object.
- * @param {*} req - Express request object.
- * @param {*} res - Express response object.
- * @param {*} next - Express next middleware function.
- */
+const AUTH_URL = "http://localhost:13001/auth"
+
 exports.handleResponse = (req, res, next) => {
     if (req.error) {
         console.log(req.error)
@@ -19,4 +9,12 @@ exports.handleResponse = (req, res, next) => {
     } else {
         res.status(200)
     }
+}
+
+exports.verifyToken = (req, res, next) => {
+    console.log(req.cookies.token)
+    axios.get(AUTH_URL + '/users/verify?token=' + req.cookies.token )
+        .then((response) => { req.user = response.data })
+        .catch((error) => { req.error = { message: "Não autorizado" } })
+        .finally(() => { next() })
 }

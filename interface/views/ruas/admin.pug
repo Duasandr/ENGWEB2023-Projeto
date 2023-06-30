@@ -1,0 +1,20 @@
+extends ../index 
+
+block middle-column 
+    // Middle Column
+    .w3-col.m7
+        .w3-row-padding
+
+        // Posts
+        if(ruas.length == 0)
+            .w3-container.w3-red
+                p Nenhuma rua para listar
+
+
+        each rua in ruas 
+            .w3-container.w3-card.w3-white.w3-round.w3-margin
+                h4=rua.nome
+                
+                a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="/ruas/update/" + rua._id) Update
+
+                a.fa.fa-comment.w3-button.w3-theme-d1.w3-margin-bottom(href="/ruas/delete/" + rua._id) Delete

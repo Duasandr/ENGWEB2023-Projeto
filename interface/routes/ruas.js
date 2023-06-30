@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer');
 const cb = require('../callbacks/ruas')
+const generic = require('../callbacks/generic')
 
 // Set up storage for uploaded files
 const storageImagens = multer.diskStorage({
@@ -28,14 +29,19 @@ const uploadTexto = multer({ storage: storageTexto })
 
 // GET
 
-router.get('/', cb.getRuas)
-router.get('/get/:id', cb.getRua)
-router.get('/add', cb.getAdd)
+router.get('/', generic.verifyToken, cb.getRuas)
+router.get('/get/:id', generic.verifyToken, cb.getRua)
+router.get('/add', generic.verifyToken, cb.getAdd)
+router.get('/admin', generic.verifyToken, cb.getAdmin)
+router.get('/delete/:id', generic.verifyToken, cb.getDelete)
+router.get('/update/:id', generic.verifyToken, cb.getUpdate)
 
 // POST
 
-router.post('/add', uploadImagens.array('imagens'), cb.postAdd, cb.storeData, cb.confirmPostAdd)
-router.post('/add/xml', uploadTexto.array('files'), cb.postAddXml, cb.storeData, cb.confirmPostAdd)
+router.post('/add', generic.verifyToken, uploadImagens.array('imagens'), cb.postAdd, cb.storeData, cb.confirmPostAdd)
+router.post('/add/xml', generic.verifyToken, uploadTexto.array('files'), cb.postAddXml, cb.storeData, cb.confirmPostAdd)
+router.post('/delete/:id', generic.verifyToken, cb.postDelete)
+router.post('/update/:id', generic.verifyToken, cb.postUpdate)
 
 
 module.exports = router;

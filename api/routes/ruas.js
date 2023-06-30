@@ -28,6 +28,7 @@ router.post('/', cb.createRua, generic.handleResponse)
 router.post('/update/:id', cb.updateRua, generic.handleResponse)
 router.post('/delete/:id', cb.deleteRua, generic.handleResponse)
 
+
 router.post('/posts/comments/add', cb.addComment, generic.handleResponse)
 router.post('/posts/add', cb.addPosts, generic.handleResponse)
 

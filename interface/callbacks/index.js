@@ -9,9 +9,9 @@ const axios = require('axios')
  * @param {*} next - Next function in the chain
  */
 exports.getIndex = (req, res, next) => {
-    //if (req.token || req.user) {
-        res.render('index', {})
-    //} else {
-    //    res.redirect('/auth')
-    //}
+    if (req.user) {
+        res.redirect('/ruas')
+    } else {
+        res.redirect('/auth')
+    }
 }

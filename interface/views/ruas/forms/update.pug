@@ -1,0 +1,29 @@
+extends ../../index 
+
+block middle-column 
+    script.
+        $(document).ready(function(){
+            $('input[type="radio"]').click(function(){
+                var formSelected = $(this).val(); 
+                if(formSelected == 'xml'){
+                    $('#xml').show();
+                    $('#manual').hide();
+                }
+                else{
+                    $('#xml').hide();
+                    $('#manual').show();
+                }
+            });
+        });
+
+    // Middle Column
+    .w3-col.m7
+        .w3-container.w3-card.w3-white.w3-round.w3-margin
+            form(action="/ruas/update/" + id method="post")
+                label Documento: 
+                textarea.w3-input.w3-border.w3-margin-bottom(cols="80", rows="24" name="rua")=rua
+                br
+
+                button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Atualizar Rua
+
+                a.w3-button.w3-theme-d1.w3-margin-bottom(href="/ruas/admin") Cancelar

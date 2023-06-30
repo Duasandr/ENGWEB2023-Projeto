@@ -10,6 +10,7 @@ block middle-column
             .w3-container.w3-red
                 p Nenhuma rua para listar
 
+
         each rua in ruas 
             .w3-container.w3-card.w3-white.w3-round.w3-margin
                 br
@@ -21,8 +22,6 @@ block middle-column
                     each imagem in rua.imagens
                         .w3-row
                             img.w3-margin-bottom(src=imagem.path style="width:100%" alt=imagem.legenda)
-                each paragrafo in rua.paragrafos 
-                    p=paragrafo
                 
                 
                 a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="ruas/get/" + rua._id) View

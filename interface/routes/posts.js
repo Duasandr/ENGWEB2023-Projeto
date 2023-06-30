@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer');
 const cb = require('../callbacks/posts')
+const generic = require('../callbacks/generic')
 
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
@@ -18,12 +19,12 @@ const upload = multer({ storage: storage })
 
 // GET
 
-router.get('/', cb.getPosts)
-router.get('/add', cb.getPostsAdd)
-router.get('/comments/add', cb.getCommentAdd)
+router.get('/', generic.verifyToken, cb.getPosts)
+router.get('/add', generic.verifyToken, cb.getPostsAdd)
+router.get('/comments/add', generic.verifyToken, cb.getCommentAdd)
 
 // POST
-router.post('/add', upload.array('files'), cb.postAdd)
-router.post('/comments/add', cb.postComment)
+router.post('/add', generic.verifyToken, upload.array('files'), cb.postAdd)
+router.post('/comments/add', generic.verifyToken, cb.postComment)
 
 module.exports = router;

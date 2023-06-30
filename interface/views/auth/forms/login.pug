@@ -5,7 +5,7 @@ block content
         .w3-container
             h4.w3-center Login
             hr
-            form(action="/login" method="post")
+            form(action="/auth/login" method="post")
                 .w3-section
                     i.fa.fa-at
                     label  Email
@@ -18,7 +18,7 @@ block content
 
                 .w3-container.w3-border-top.w3-padding-16.w3-light-grey
                     span.w3-right.w3-padding.w3-hide-small Ainda não tem conta? Pode registar-se 
-                        a(href="/register") aqui
+                        a(href="/auth/register") aqui
             
             if(error)
                 .w3-container.w3-red
