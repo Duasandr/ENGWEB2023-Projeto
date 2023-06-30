@@ -29,8 +29,12 @@ block middle-column
             br
 
             form(id="xml" action="/ruas/add/xml" method="post" enctype="multipart/form-data" style="display:none")
-                label(for="file") Ficheiros: 
-                input(type="file" name="files" id="files" multiple)
+                label Ficheiros: 
+                input(type="file" id="files" name="files" multiple)
+                br
+
+                label Ficheiros: 
+                input(type="file" id="imagensXml" name="imagensXml" multiple)
                 br
 
                 button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Adicionar Ruas
@@ -43,16 +47,18 @@ block middle-column
                 input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Número da rua" name="numero" required)
 
                 label Descrição:
-                textarea.w3-input.w3-border.w3-margin-bottom( placeholder="Descrição da rua" name="paras" required)
+                textarea.w3-input.w3-border.w3-margin-bottom( placeholder="Descrição da rua" name="paragrafos" required)
 
                 label Casas:
                 br
                 button.w3-button.w3-theme-d1.w3-margin-bottom(type="button" id="addCasaForm") Adicionar Casa
                 .w3-container.w3-card.w3-white.w3-round.w3-margin(id="casasContainer")
-                
-                label Figuras:
-                //input(type="file" name="file" id="file" multiple)
+
+                label Imagens:
+                input(type="file" id="imagens" name="imagens" multiple)
                 br
+
+                .w3-container(id="legendasImagens")
 
                 button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Adicionar Rua
 
@@ -79,6 +85,22 @@ block middle-column
                         <textarea class="w3-input w3-border w3-margin-bottom" placeholder="Descrição da casa" name="casasDesc" required></textarea>
                     </div>
                 `);
+            });
+        });
+
+    script. 
+        $(document).ready(function(){
+            $("#imagens").on("change", function() {
+                if ($("#imagens")[0].files.length > 5) {
+                    alert("You can select only 5 images");
+                }
+                for (var i = 0; i < $("#imagens")[0].files.length; ++i) {
+                    $("#legendasImagens").append(`
+                        <label>Legenda</label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Legenda da imagem ${i + 1}" name="legendasImagens" required>
+                    `);
+                    
+                }
             });
         });
 

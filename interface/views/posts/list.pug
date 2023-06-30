@@ -15,9 +15,8 @@ block middle-column
                         h5=post.autor
                         .w3-row-padding(style="margin:0 -16px")
                             each imagem in post.imagens
-                                - const path = '#'
                                 .w3-row
-                                    img.w3-margin-bottom(src=path style="width:100%" alt=imagem.legenda)
+                                    img.w3-margin-bottom(src=imagem.path style="width:100%" alt=imagem.legenda)
                         br
                         p=post.texto
                         br

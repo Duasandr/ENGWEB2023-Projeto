@@ -25,6 +25,7 @@ app.use('/', indexRouter);
 app.use('/ruas', ruasRouter);
 app.use('/auth', authRouter)
 app.use('/posts', postsRouter)
+app.use('/imagens', express.static("uploads/imagens"))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

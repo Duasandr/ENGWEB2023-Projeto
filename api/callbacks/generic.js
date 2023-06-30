@@ -19,6 +19,7 @@ exports.handleResponse = (req, res, next) => {
     } else if (req.data) {
         res.status(200).jsonp(req.data)
     } else {
+        console.log("No data or error property in request object.")
         res.error = { message: "No data or error property in request object." }
         res.status(500).jsonp({})
     }

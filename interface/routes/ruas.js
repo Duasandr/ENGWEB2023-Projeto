@@ -4,9 +4,18 @@ const multer = require('multer');
 const cb = require('../callbacks/ruas')
 
 // Set up storage for uploaded files
-const storage = multer.diskStorage({
+const storageImagens = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, 'uploads/imagens');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
+const storageTexto = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/texto');
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname)
@@ -14,7 +23,8 @@ const storage = multer.diskStorage({
 })
 
 // Create the multer instance
-const upload = multer({ storage: storage })
+const uploadImagens = multer({ storage: storageImagens })
+const uploadTexto = multer({ storage: storageTexto })
 
 // GET
 
@@ -24,15 +34,8 @@ router.get('/add', cb.getAdd)
 
 // POST
 
-//router.post('/add', cb.postAdd, cb.handleResponse)
-router.post('/add/xml', upload.array('files'), cb.postAddXml, cb.storeData, (req, res, next) => {
-    if(req.error) {
-        console.log(req.error)
-        res.status(500).render('ruas/forms/add', { error: req.error.message })
-    } else {
-        res.status(200).render('ruas/forms/add', { success: "Foram inseridos " + req.data.length + " documentos." })
-    }
-})
+router.post('/add', uploadImagens.array('imagens'), cb.postAdd, cb.storeData, cb.confirmPostAdd)
+router.post('/add/xml', uploadTexto.array('files'), uploadImagens.array('imagensXml'), cb.postAddXml, cb.storeData, cb.confirmPostAdd)
 
 
 module.exports = router;

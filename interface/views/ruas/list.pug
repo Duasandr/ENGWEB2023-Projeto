@@ -19,9 +19,8 @@ block middle-column
                 hr.w3-clear
                 .w3-row-padding(style="margin:0 -16px")
                     each imagem in rua.imagens
-                        - const path = '#' //process.env.IMAGE_URL + '/' + figura.imagem
                         .w3-row
-                            img.w3-margin-bottom(src=path style="width:100%" alt=imagem.legenda)
+                            img.w3-margin-bottom(src=imagem.path style="width:100%" alt=imagem.legenda)
                 each paragrafo in rua.paragrafos 
                     p=paragrafo
                 

@@ -38,8 +38,63 @@ exports.getAdd = (req, res, next) => {
 
 // POST
 
+exports.postAdd = (req, res, next) => {
+
+    if (!(req.casasNumero instanceof Array)) {
+        req.body.casasNumero = [req.body.casasNumero]
+        req.body.casasForo = [req.body.casasForo]
+        req.body.casasEnfiteuta = [req.body.casasEnfiteuta]
+        req.body.casasDesc = [req.body.casasDesc]
+        req.body.legendasImagens = [req.body.legendasImagens]
+    }
+    console.log(req.body)
+    if (req.files) {
+        const imagens = []
+
+        var i = 0
+        req.files.forEach(imagem => {
+            imagens.push(
+                {
+                    "path": "/imagens/" + imagem.originalname,
+                    "legenda": req.body.legendasImagens[i++]
+                }
+            )
+        })
+        req.body.imagens = imagens
+    }
+    const document = {
+        "_id": "MRB-" + req.body.numero + "-" + req.body.nome,
+        "nome": req.body.nome,
+        "numero": req.body.numero,
+        "paragrafos": req.body.paragrafos,
+        "imagens": req.body.imagens,
+        "casas": []
+    }
+
+
+    var i = 0
+
+    req.body.casasNumero.forEach((numero) => {
+        if (numero != undefined) {
+            const casa = {
+                "_id": "MRB-CASA-" + req.body.numero + "-" + numero,
+                "numero": numero,
+                "foro": req.body.casasForo[i],
+                "enfiteuta": req.body.casasEnfiteuta[i],
+                "descricao": req.body.casasDesc[i],
+                "vista": ""
+            }
+
+            document.casas.push(casa)
+        }
+    })
+    req.data = document
+    next()
+
+}
+
 exports.postAddXml = (req, res, next) => {
-    if(!req.files) {
+    if (!req.files) {
         console.log('No files were uploaded. Multer failed.')
         req.error = { message: "Não foram enviados ficheiros." }
         next()
@@ -51,18 +106,17 @@ exports.postAddXml = (req, res, next) => {
             data.push(rua)
         })
         req.data = data
-        req.collection = 'ruas'
         next()
     }
 }
 
 exports.storeData = (req, res, next) => {
-    if(req.error) {
+    if (req.error) {
         next()
     } else {
         axios({
             method: 'post',
-            url: 'http://localhost:13002/api/' + req.collection,
+            url: 'http://localhost:13002/api' + "/ruas",
             data: req.data
         })
             .then((response) => {
@@ -77,10 +131,21 @@ exports.storeData = (req, res, next) => {
     }
 }
 
-exports.handleResponse = (req, res, next) => {
-    if(req.error) {
+exports.confirmPostAdd = (req, res, next) => {
+    if (req.error) {
+        console.log(req.error)
         res.status(500).render('ruas/forms/add', { error: req.error.message })
     } else {
-        res.render('ruas/confirm/add', { data: req.data })
+        success = ""
+        if (req.files && req.files.extension != 'xml') {
+            success += "Foram inseridas " + req.files.length + " imagens.\n"
+        }
+        var inserted = 1
+        if (req.data instanceof Array) {
+            inserted = req.data.length
+        }
+
+        success += "Foram inseridos " + req.data.length + " documentos."
+        res.status(200).render('ruas/forms/add', { success: "Foram inseridos " + inserted + " documentos." })
     }
 }

@@ -6,7 +6,7 @@ const cb = require('../callbacks/posts')
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, 'uploads/imagens');
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname)
