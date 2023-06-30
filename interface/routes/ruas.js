@@ -35,7 +35,7 @@ router.get('/add', cb.getAdd)
 // POST
 
 router.post('/add', uploadImagens.array('imagens'), cb.postAdd, cb.storeData, cb.confirmPostAdd)
-router.post('/add/xml', uploadTexto.array('files'), uploadImagens.array('imagensXml'), cb.postAddXml, cb.storeData, cb.confirmPostAdd)
+router.post('/add/xml', uploadTexto.array('files'), cb.postAddXml, cb.storeData, cb.confirmPostAdd)
 
 
 module.exports = router;

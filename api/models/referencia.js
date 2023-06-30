@@ -12,8 +12,8 @@ const Schema = mongoose.Schema
  */
 const ReferenciaSchema = new Schema({
     "_id": { type: String },
-    "tipo": { type: String, required: true, enum: ['data', 'lugar', 'empresa', 'família', 'instituição', 'pessoa'] },
-    'texto': { type: String, required: true }
+    "tipo": { type: String, enum: ['data', 'lugar', 'empresa', 'família', 'instituição', 'pessoa'] },
+    'texto': { type: String }
 })
 
 // Export model with name, schema and collection

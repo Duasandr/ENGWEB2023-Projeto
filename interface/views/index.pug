@@ -8,22 +8,12 @@ block content
             // Profile
             .w3-card.w3-round.w3-white
                 .w3-container
-                    h4.w3-center My Profile
+                    h4.w3-center=user.username
                     p.w3-center
                     hr
                     p
-                        i.fa.fa-pencil.fa-fw.w3-margin-right.w3-text-theme Designer, UI
+                        i.fa.fa-pencil.fa-fw.w3-margin-right.w3-text-theme=user.filiacao
                     p
-                        i.fa.fa-home.fa-fw.w3-margin-right.w3-text-theme London, UK
-                    p
-                        i.fa.fa-birthday-cake.fa-fw.w3-margin-right.w3-text-theme April 1, 1988
-
-            // Accordion
-            .w3-card.w3-round
-                .w3-white
-                    button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo1')")
-                        i.fa.fa-circle-o-notch.fa-fw.w3-margin-right My posts
-                    .w3-hide.w3-container(id="Demo1")
-                        p Some text..
+                        i.fa.fa-home.fa-fw.w3-margin-right.w3-text-theme=user.email
 
         block middle-column
