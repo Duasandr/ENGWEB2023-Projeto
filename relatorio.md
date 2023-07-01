@@ -18,7 +18,7 @@ Para isso foi desenvolvido três servidores baseados em Node.js que correm em si
 
 ### 2.2. Análise do dataset
 
-O dataset é composto por 60 ficheiros XML, cada um deles contendo informação relativa a uma rua. No conteúdo fornecido encontramos o ficheiro ```MRB-Rua.xsd``` que contém a descrição da estrutura dos ficheiros XML. A estrutura dos ficheiros encontra-se em anexo ([aqui](#42-estrutura-dos-ficheros-xml)).
+O dataset é composto por 60 ficheiros XML, cada um deles contendo informação relativa a uma rua. No conteúdo fornecido encontramos o ficheiro ```MRB-Rua.xsd``` que contém a descrição da estrutura dos ficheiros XML.
 
 Estão presentes na estrutura dos ficheiros os seguintes elementos:
 
@@ -82,149 +82,76 @@ A API de dados disponibiliza da rota ```/api/ruas``` que permite a manipulação
 Encontram-se disponíveis as seguintes rotas:
 
 * ```GET /api/ruas```: retorna a lista de ruas;
-* ```GET /api/ruas/:id```: retorna o documento com o id especificado;
-* ```POST /api/ruas```: cria um novo documento;
-* ```POST /api/ruas/update```: atualiza o documento com o id especificado;
-* ```POST /api/ruas/delete```: elimina o documento com o id especificado;
+* ```GET /api/ruas/:id```: retorna a rua com o id especificado;
+* ```GET /api/ruas/lugares```: retorna a lista de lugares;
+* ```GET /api/ruas/entidades```: retorna a lista de entidades;
+* ```GET /api/ruas/datas```: retorna a lista de datas;
+* ```GET /api/ruas/data/:data```: retorna a lista de ruas com a data especificada;
+* ```GET /api/ruas/posts```: retorna a lista de posts;
+* ```POST /api/ruas```: cria uma nova rua;
+* ```POST /api/update/:id```: atualiza a rua com o id especificado;
+* ```POST /api/delete/:id```: apaga a rua com o id especificado;
+* ```POST /api/ruas/posts/add?idRua=...```: cria um novo post;
+* ```POST /api/ruas/comments/add?idPost=...```: cria um novo comentário;
 
-Nestas rotas são utilazadas callbacks que populam o ```request``` com o resultado das operações, passando a verificação do resultado para o middleware seguinte.
+Nas rotas são usadas callbacks genericas que constituiem o peipeline de execução. Acabam todas com handleResponse que trata de enviar a resposta ao cliente.
 
-Em muitas rotas é utilizado a mesma callback no final do pipeline horizontal de middlware para responder ao pedido. Esta callback é a ```handleResponse```que verifica a existência de erros ou dados obtidos e responde ao pedido com o resultado.
+#### 2.5 Serviço de Autenticação
 
+O serviço de autenticação foi desenvolvido em Node.js. Este serviço permite a autenticação dos utilizadores e a manipulação da informação relativa aos utilizadores.
+
+Este serviço utiliza o módulo ```passport``` que permite a autenticação dos utilizadores e está ligado a uma base de dados MongoDB separada da API de dados.
+Utiliza o plugin do mongoose ```passport-local-mongoose``` que permite criar um modelo de utilizador com autenticação local.
+
+#### 2.5.1. Modelos e Controladores
+
+Foi criada uma coleção denominada de ```users``` para guardar a informação relativa aos utilizadores. 
+Contem os seguintes campos:
+
+* ``email``: email do utilizador;
+* ```username```: nome do utilizador;
+* ```filiacao```: filiação do utilizador;
+* ```nivel```: nível de acesso do utilizador, pode ser ```admin``` ou ```user```;
+* ```dataRegisto```: data de registo do utilizador;
+* ```dataUltimoAcesso```: data do último acesso do utilizador;
+
+#### 2.5.2. Rotas
+
+O serviço de autenticação disponibiliza da rota ```/auth``` que permite a manipulação dos documentos da coleção ```users```.
+
+Encontram-se disponíveis as seguintes rotas:
+
+* ```GET /auth/verify```: verifica se o utilizador está autenticado;
+* ```POST /auth/register```: cria um novo utilizador;
+* ```POST /auth/login```: autentica o utilizador;
+
+### 2.6. Interface
+
+A interface foi desenvolvida em Node.js. Esta interface permite a navegação e manipulação da informação.
+As rotas estão protegidas por um mecanismo de autenticação que permite destinguir os diferentes tipos de ultilizadores e que permite a cada um deles realizar diferentes operações.
+
+#### 2.6.1. Rotas
+
+Existem 5 rotas principais: ```/```, ```/ruas```, ```/auth```, ```/posts``` e ```/imagens```.
+
+A rota ```/``` é a rota principal. Esta rota verifica se o utilizador está autenticado e redireciona para a rota ```/ruas``` se estiver autenticado ou para a rota ```/auth``` se não estiver autenticado.
+
+A rota ```/ruas``` é a rota que permite a navegação e manipulação das ruas. Caso seja um utilizador autenticado, é apresentada uma lista de ruas. Caso contrário, é apresentado um erro. Se o utilizador for administrador, é apresentado um botão que permite a criação de uma nova rua bem como a edição e eliminação de ruas existentes. 
+
+A rota ```/auth``` é a rota que permite a autenticação dos utilizadores. Esta rota apresenta um formulário que permite fazer login ou registar um novo utilizador.
+
+A rota ```/posts``` é a rota que permite a navegação e manipulação dos posts. Um utilizador consumidor consegue criar um novo post e fazer comentários a posts existentes.
+
+A rota ```/imagens``` é a rota que permite que serve as imagens. Esta rota recebe o caminho da imagem e devolve a imagem.
 
 ## 3. Conclusão
 
-## 4. Apêndice
+Várias dificuldades foram encontradas durante o desenvolvimento do projeto:
 
-### 4.1. Requisitos
+* Formulários de edição de ruas: foi necessário criar um formulário que permitisse a edição de uma rua. Para tal, foi necessário criar um formulário dinâmico que permitisse a edição de uma rua com um número variável de parágrafos, casas e imagens. No entanto, foi possível resolver este problema. Foi resolvido com recurso a manipulação do documento json que é enviado para o servidor. Este documento é manipulado de forma a que seja possível a edição de uma rua.
+* Upload de imagens para a API de dados: foi necessário criar um mecanismo que permitisse o upload de imagens para a API de dados. Não foi possível resolver este problema pois fazer um request com o axios da parte da interface com um multipart/form-data não é suportado. Uma maneira de dar a volta a este problema seria fazer o upload da imagem para a interface e depois estabelecer uma rota que permitisse servir a imagem.
+* Serviço de tratamento de dados: é possivel adicionar ruas através de ficherios xml. Foi considerado um serviço à parte da interface para fazer o tratamento dos dados de modo a aliviar a carga computacional na interface. No entanto, não foi possível implementar este serviço. A interface faz o tratamento dos dados e envia-os para a API de dados.
+* Paginação: não foi possível implementar a paginação. A interface apresenta todos os resultados de uma só vez.
+* Generalização das rotas e código: etsa parte foi a mais difícil de implementar. A grande maioria do tempo dispendido foi nesta parte. Apesar de agora exitir pouca repetição de código, foi necessário fazer muitas alterações a cada vez que se queria adicionar uma nova funcionalidade.
 
-#### 4.1.1. Requisitos de Manipulação
-
-| Número | Descrição | Área | Completo |
-| :---: | :--- | :---: | :---: |
-| RM1 | A interface deve permitir a navegação em toda a informação disponibilizada | Interface | &#9744; |
-| RM2 | A interface deve permitir a navegação por nome | Interface | &#9744; |
-| RM3 | A interface deve permitir a navegação por lugar | Interface | &#9744; |
-| RM4 | A interface deve permitir a navegação por data | Interface | &#9744; |
-| RM5 | A interface deve permitir ao utilizador inserir novos registos | Interface | &#9744; |
-| RM6 | A interface deve permitir ao utilizador editar registos existentes | Interface | &#9744; |
-| RM7 | A interface deve permitir ao faça um post sobre o registo | Interface | &#9744; |
-| RM8 | A interface deve permitir ao utilizador fazer um comentário sobre um post | Interface | &#9744; |
-| RM9 | Um utilizador tem de ter nome, email, filiação, nível, data de registo, data de ultimo acesso e password | API | &#9744; |
-
-#### 4.1.2. Requisitos de controlo
-
-| Número | Descrição | Área | Completo |
-| :---: | :--- | :---: | :---: |
-| RC1 | A interface deve permitir ao utilizador fazer login através de autenticação com username e password | Interface | &#9744;  |
-| RC2 | Devem existir dois niveis de acesso: Administrador e Consumidor | API | &#9744; |
-| RC3 | O administrador deve ter acesso a todas as operações | Auth | &#9744; |
-| RC4 | O consumidor pode apenas consultar, fazer posts e sugerir alterações | Auth | &#9744; |
-
-### 4.2 Estrutura dos ficheros XML
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    <xs:complexType name="Tentidade" mixed="true">
-        <xs:attribute name="tipo" type="TipoEntidade"/>
-    </xs:complexType>
-    <xs:simpleType name="TipoEntidade">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="pessoa"/>
-            <xs:enumeration value="instituição"/>
-            <xs:enumeration value="empresa"/>
-            <xs:enumeration value="família"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:group name="misto">
-        <xs:choice>
-            <xs:element name="entidade" type="Tentidade"/>
-            <xs:element name="lugar">
-                <xs:complexType>
-                    <xs:simpleContent>
-                        <xs:extension base="xs:string">
-                            <xs:attribute name="norm" type="xs:string"/>
-                        </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="data" type="xs:string"/>
-        </xs:choice>
-    </xs:group>
-    <xs:element name="rua">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="meta">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="número" type="xs:string"/>
-                            <xs:element name="nome" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="corpo">
-                    <xs:complexType>
-                        <xs:choice maxOccurs="unbounded">
-                            <xs:element name="para">
-                                <xs:complexType mixed="true">
-                                    <xs:group maxOccurs="unbounded" minOccurs="0" ref="misto"/>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="lista-casas">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element maxOccurs="unbounded" name="casa">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="número" type="xs:string"/>
-                                                  <xs:element minOccurs="0" name="enfiteuta"
-                                                  type="xs:string" maxOccurs="unbounded"/>
-                                                  <xs:element minOccurs="0" name="foro"
-                                                  type="xs:string"/>
-                                                  <xs:element minOccurs="0" name="desc">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                  <xs:element maxOccurs="unbounded" minOccurs="0"
-                                                  name="para">
-                                                  <xs:complexType mixed="true">
-                                                  <xs:group maxOccurs="unbounded" minOccurs="0"
-                                                  ref="misto"/>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  <xs:element minOccurs="0" name="vista"
-                                                  type="xs:string"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="nome" type="xs:string"/>
-                            <xs:element name="figura">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="imagem">
-                                            <xs:complexType>
-                                                <xs:attribute name="path" type="xs:string"
-                                                  use="required"/>
-                                                <xs:attribute name="largura" type="xs:int"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="legenda" type="xs:string"/>
-                                    </xs:sequence>
-                                    <xs:attribute name="id" type="xs:ID" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:choice>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-</xs:schema>
-```
-
+Contudo, foi possível desenvolver uma API de dados que permite a manipulação da informação guardada no MongoDB, um serviço de autenticação que permite a autenticação dos utilizadores e a manipulação e visualização através de uma interface.
