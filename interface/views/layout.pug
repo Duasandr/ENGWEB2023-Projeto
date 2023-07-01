@@ -19,15 +19,15 @@ html
                 a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/')
                     i.glyphicon.glyphicon-home.w3-margin-right
                 
-                if(user.level == 'admin')
-                    a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/ruas/admin') Ruas 
-                else
-                    a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/ruas') Ruas
+                //if(user.level == 'admin')
+                //  a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/ruas/admin') Ruas 
+                //else
+                a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/ruas') Ruas
 
                 //a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/ruas') Ruas
                 a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/posts') Posts
-                if(user.level == 'admin')
-                    a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/users') Utilizadores
+                //if(user.level == 'admin')
+                //a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/users') Utilizadores
                 a.w3-bar-item.w3-button.w3-padding-large.w3-theme-d4(href='/auth/logout') Logout 
 
         // Page Container

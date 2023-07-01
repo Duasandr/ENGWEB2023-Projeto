@@ -11,5 +11,4 @@ const ComentarioSchema = new Schema({
     "texto": { type: String, required: true }
 })
 
-// Export model with name, schema and collection
 module.exports = ComentarioSchema

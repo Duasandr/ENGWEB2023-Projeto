@@ -19,5 +19,4 @@ const RuaSchema = new Schema({
     "posts": [PostSchema]
 })
 
-// Export model with name, schema and collection
 module.exports = mongoose.model('Rua', RuaSchema, 'ruas')

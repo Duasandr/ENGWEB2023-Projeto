@@ -16,5 +16,4 @@ const PostSchema = new Schema({
     "comentarios": [ComentarioSchema]
 })
 
-// Export model with name, schema and collection
 module.exports = PostSchema

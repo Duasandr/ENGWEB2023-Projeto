@@ -10,7 +10,7 @@ const RuaModel = require('../models/rua');
  * @returns {Promise} promise that a list of all documents is sorted by ```sort``` object
  */
 exports.list = (sort) => { 
-    return RuaModel.find({}, {}, { sort }).exec() 
+    return RuaModel.find({}, {}).sort(sort).exec() 
 }
 
 /**
