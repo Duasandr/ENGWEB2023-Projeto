@@ -6,169 +6,143 @@
 const RuaController = require('../controllers/rua')
 
 /**
- * Callback for the index /ruas route.
- * @details This is the callback for the index route. It simply returns a JSON object with a message.
- * @param {*} req - Express request object.
- * @param {*} res - Express response object.
- * @param {*} next - Express next middleware function.
+ * Checks if the request has a query and if it has an order parameter.
+ */
+getOrder = (req) => {
+    return req.query && req.query.order ? req.query.order : 1
+}
+
+/**
+ * Checks if the request has a query and if it has a sortBy parameter.
+ */
+getSortBy = (req) => {
+    return req.query && req.query.sortBy ? req.query.sortBy : "_id"
+}
+
+/**
+ * Returns a sort object with the sortBy parameter as the key and the order parameter as the value.
+ */
+getSort = (req) => {
+    const sort = {}
+    sort[getSortBy(req)] = parseInt(getOrder(req), 10)
+    return sort
+}
+
+/**
+ * Populates the ```req.promise``` with a promise that a list of all documents is sorted by ```req.query.sortBy``` and ```req.query.order```.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
  */
 exports.ruas = (req, res, next) => {
-    RuaController
-        .list()
-        .then((documents) => { req.data = documents })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
-}
-
-exports.rua = (req, res, next) => {
-    RuaController.get(req.params.id)
-        .then((document) => {
-            if(!document) { 
-                req.error = { message: 'rua ' + id + ' não foi encontrada' }
-            } else { 
-                req.data = document 
-            }
-        })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.list(getSort(req)); next()
 }
 
 /**
- * Creates a document or multiple documents.
- * @details It adds a JSON object with the created document(s) to the ```req``` inside a ```data``` property.
- * It expects that the ```req``` has a ```body``` property with the document(s) to be created.
- * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
- * It hands over the request to the next middleware function.
- * @param {*} req - Express request object.
- * @param {*} res - Express response object.
- * @param {*} next - Express next middleware function.
+ * Populates the ```req.promise``` with a promise that a document is returned by its id.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/get/:id```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.rua = (req, res, next) => {
+    req.promise = RuaController.get(req.params.id); next()
+}
+
+/**
+ * Populates the ```req.promise``` with a promise that a new document is created.
+ * @details This function is used as a callback for the ```POST``` route ```/api/ruas/```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
  */
 exports.createRua = (req, res, next) => {
-    RuaController
-        .create(req.body)
-        .then((document) => { req.data = document })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.create(req.body); next()
 }
 
 /**
- * Updates a document.
- * @details It adds a JSON object with the updated document to the ```req``` inside a ```data``` property.
- * It expects that the ```req``` has a ```body``` property with the document to be updated and an ```id``` property with the document's id.
- * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
- * It hands over the request to the next middleware function.
+ * Populates the ```req.promise``` with a promise that a document is updated.
+ * @details This function is used as a callback for the ```POST``` route ```/api/ruas/update/:id```.
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
  */
 exports.updateRua = (req, res, next) => {
-    RuaController
-        .update(req.params.id, req.body)
-        .then((document) => { req.data = document })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.update(req.params.id, req.body); next()
 }
 
 /**
- * Deletes a document.
- * @details It adds a JSON object with the deleted document to the ```req``` inside a ```data``` property.
- * It expects that the ```req``` has an ```id``` property with the document's id.
- * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
+ * Populates the ```req.promise``` with a promise that a document is deleted.
+ * @details This function is used as a callback for the ```POST``` route ```/api/ruas/delete/:id```.
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
  */
 exports.deleteRua = (req, res, next) => {
-    RuaController
-        .delete(req.params.id)
-        .then((document) => { req.data = document })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.delete(req.params.id); next()
 }
 
 /**
- * Callback for ruas/lugares/query route. Retrieves all Lugar documents that reference a Rua document.
- * @details It adds a JSON object with the retrieved documents to the ```req``` inside a ```data``` property.
- * In case of error, it adds a JSON object with the error message to the ```req``` inside an ```error``` property.
- * It hands over the request to the next middleware function.
- * @param {*} req - Express request object.
- * @param {*} res - Express response object.
- * @param {*} next - Express next middleware function.
+ * Populates the ```req.promise``` with a promise that a list of all ```lugares```.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/lugares```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
  */
 exports.listLugares = (req, res, next) => {
-    var order = 1
-    
-    if(req.order) {
-        order = req.order
-    }
-
-    RuaController
-        .listLugares(order)
-        .then((documents) => { req.data = documents })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.listLugares(getOrder(req)); next()
 }
 
+/**
+ * Populates the ```req.promise``` with a promise that a list of all ```datas```.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/datas```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.listDatas = (req, res, next) => {
-    var order = 1
-    
-    if(req.order) {
-        order = req.order
-    }
-
-    RuaController
-        .listDatas(order)
-        .then((documents) => { req.data = documents })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.listDatas(getOrder(req)); next()
 }
 
+/**
+ * Populates the ```req.promise``` with a promise that a list of all ```entidades```.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/entidades```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.listEntidades = (req, res, next) => {
-    var order = 1
-
-    if(req.order) {
-        order = req.order
-    }
-
-    RuaController
-        .listEntidades(order)
-        .then((documents) => { req.data = documents })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.listEntidades(req.query.idRua, getOrder(req)); next()
 }
 
+/**
+ * Populates the ```req.promise``` with a promise that a list of all ```posts```.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/posts```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.listPosts = (req, res, next) => {
-    var sortBy = "data_criado"
-    var order = -1
-
-    if(req.query) {
-        if(req.query.order) {
-            order = req.query.order
-        }
-        if(req.query.sortBy) {
-            field = req.query.sortBy
-        }
-    }
-
-    RuaController
-        .listPosts(sortBy, order)
-        .then((documents) => { req.data = documents })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.listPosts(getSortBy(req), getOrder(req)); next()
 }
 
+/**
+ * Populates the ```req.promise``` with a promise that a ```post``` is added to a ```rua```. 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.addPosts = (req, res, next) => {
-    RuaController
-        .addPost(req.query.idRua, req.body)
-        .then((document) => { req.data = document })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
-} 
+    req.promise = RuaController.addPost(req.query.idRua, req.body); next()
+}
 
+/**
+ * Populates the ```req.promise``` with a promise that a ```comment``` is added to a ```post```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.addComment = (req, res, next) => {
-    RuaController
-        .addComment(req.query.idPost, req.body)
-        .then((document) => { req.data = document })
-        .catch((error) => { req.error = error })
-        .finally(() => { next() })
+    req.promise = RuaController.addComment(req.body.idPost, req.body); next()
 }
