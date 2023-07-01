@@ -5,10 +5,8 @@ block middle-column
     // Middle Column
     .w3-col.m7
         .w3-container.w3-card.w3-white.w3-round.w3-margin
-            p Tem a certeza que quer apagar a rua?
+            h1.w3-container.w3-green Rua apagada com sucesso
             br
-            form(action="/ruas/delete/" + id method="post")
-                button.w3-button.w3-theme-d1.w3-margin-bottom(type="submit") Apagar Rua
-                a.w3-button.w3-theme-d1.w3-margin-bottom(href="/ruas/admin") Cancelar
+            a(href="/ruas/admin") Voltar
             
 

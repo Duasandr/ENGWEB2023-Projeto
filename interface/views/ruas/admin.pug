@@ -6,12 +6,14 @@ block middle-column
         .w3-row-padding
 
         // Posts
-        if(ruas.length == 0)
+        if(data.length == 0)
             .w3-container.w3-red
                 p Nenhuma rua para listar
 
+        .w3-container.w3-card.w3-white.w3-round.w3-margin
+            a.fa.fa-plus(href="/ruas/add" style="font-size:50px")
 
-        each rua in ruas 
+        each rua in data 
             .w3-container.w3-card.w3-white.w3-round.w3-margin
                 h4=rua.nome
                 

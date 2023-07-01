@@ -12,13 +12,18 @@ exports.getRuas = (req, res, next) => {
     }
 
     var sort = ""
-    if(req.query) {
+    if(req.query.sortBy) {
         sort = "?sortBy=" + req.query.sortBy + "&order=" + req.query.order
     } else {
         sort = "?sortBy=_id&order=1"
     }
 
-    req.page = { name: 'ruas/list' } 
+    if(req.user.level == "admin") {
+        req.page = { name: 'ruas/admin' }
+    } else {
+        req.page = { name: 'ruas/list' } 
+    }
+
     req.promise = axios.get(API_URL + "/ruas" + sort)
     next()
 }
@@ -51,7 +56,7 @@ exports.getAdmin = (req, res, next) => {
     }
     
     req.page = { name: 'ruas/admin' }
-    req.promise = axios.get(API_URL + "/ruas/admin")
+    req.promise = axios.get(API_URL + "/ruas")
     next()
 }
 
@@ -68,6 +73,8 @@ exports.postAdd = (req, res, next) => {
         req.body.casasForo = [req.body.casasForo]
         req.body.casasEnfiteuta = [req.body.casasEnfiteuta]
         req.body.casasDesc = [req.body.casasDesc]
+    }
+    if(!(req.body.legendasImagens instanceof Array)) {
         req.body.legendasImagens = [req.body.legendasImagens]
     }
 
@@ -157,6 +164,7 @@ exports.getDelete = (req, res, next) => {
     }
 
     req.page = { name: 'ruas/forms/delete' }
+    req.data = { id: req.params.id }
     next()
 }
 
@@ -166,8 +174,8 @@ exports.postDelete = (req, res, next) => {
         return
     }
 
-    req.page = { name: 'ruas/admin' }
-    req.promise = axios.get(API_URL + "/ruas/delete/" + req.params.id)
+    req.page = { name: 'ruas/confirm/delete' }
+    req.promise = axios.post(API_URL + "/ruas/delete/" + req.params.id)
     next()
 }
 

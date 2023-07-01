@@ -58,6 +58,7 @@ exports.rua = (req, res, next) => {
  * @param {*} next 
  */
 exports.createRua = (req, res, next) => {
+    console.log(req.body)
     req.promise = RuaController.create(req.body); next()
 }
 
