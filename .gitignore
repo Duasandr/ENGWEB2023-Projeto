@@ -130,3 +130,5 @@ dist
 node_modules
 .vscode/
 .idea/
+
+parse/texto/*
