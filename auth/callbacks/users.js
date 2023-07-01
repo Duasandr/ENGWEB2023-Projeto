@@ -5,7 +5,7 @@ const UserModel = require("../models/user")
 const SECRET = "EngWeb2023"
 
 module.exports.verify = function (req, res, next) {
-    const token = req.query.token || req.body.token
+    const token = req.query.token
 
     if (!token) {
         req.error = "Token inixistente."
@@ -31,7 +31,6 @@ module.exports.registerUser = (req, res, next) => {
     })
 
     if(req.body.level) {
-        console.log(req.body.level)
         newUser.level = req.body.level
     }
         

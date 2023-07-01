@@ -6,27 +6,22 @@ block middle-column
         .w3-row-padding
 
         // Posts
-        if(ruas.length == 0)
+        if(data.length == 0)
             .w3-container.w3-red
                 p Nenhuma rua para listar
 
         .w3-container.w3-card.w3-white.w3-round.w3-margin
             a.fa.fa-angle-double-up(href="/ruas?sortBy=nome&order=1" style="font-size:50px")
             a.fa.fa-angle-double-down(href="/ruas?sortBy=nome&order=-1" style="font-size:50px")
+            a.fa.fa-hourglass(href="/ruas/datas" style="font-size:50px")
 
-        each rua in ruas 
+        each rua in data 
+            
             .w3-container.w3-card.w3-white.w3-round.w3-margin
-                br
-                //img.w3-left.w3-circle.w3-margin-right(src="#" alt="Avatar" style="width:60px")
-                    span.w3-right.w3-opacity 1 min
                 h4=rua.nome
                 hr.w3-clear
                 .w3-row-padding(style="margin:0 -16px")
-                    each imagem in rua.imagens
-                        .w3-row
-                            img.w3-margin-bottom(src=imagem.path style="width:100%" alt=imagem.legenda)
                 
-                
-                a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="ruas/get/" + rua._id) View
+                a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="/ruas/get/" + rua._id) View
             
-                a.fa.fa-comment.w3-button.w3-theme-d1.w3-margin-bottom(href="posts/add?idRua=" + rua._id) Post
+                a.fa.fa-comment.w3-button.w3-theme-d1.w3-margin-bottom(href="/posts/add?idRua=" + rua._id) Post

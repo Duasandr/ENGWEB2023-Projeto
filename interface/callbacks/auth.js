@@ -41,5 +41,5 @@ exports.postRegister = (req, res, next) => {
 
 exports.getLogout = (req, res, next) => {
     res.clearCookie('token')
-    res.redirect('/')
+    res.redirect('/auth')
 }

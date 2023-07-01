@@ -110,7 +110,7 @@ extractParas = (parasElements, refs) => {
             }
         })
 
-        paras.push(parasElement.innerHTML)
+        paras.push(parasElement.textContent)
     })
 
     return paras

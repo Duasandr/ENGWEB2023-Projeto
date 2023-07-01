@@ -5,22 +5,30 @@ const API_URL = process.env.API_URL || 'http://localhost:13002/api'
 // GET
 
 exports.getPosts = (req, res, next) => {
-    axios.get(API_URL + "/ruas/posts")
-        .then((response) => {
-            res.render('posts/list', { data: response.data, user: req.user })
-        })
-        .catch((error) => {
-            console.log(error)
-            res.render('posts/list', { data: [], error: "Não foi possível obter posts.", user: req.user })
-        })
+    var sort = ""
+    if(req.query.sortBy) {
+        sort = "?sortBy=" + req.query.sortBy + "&order=" + req.query.order
+    } else {
+        sort = "?sortBy=data_criado&order=-1"
+    }
+
+    console.log(sort)
+    req.page = { name: 'posts/list' }
+    req.promise = axios.get(API_URL + "/ruas/posts" + sort)
+    next()
+    
 }
 
 exports.getPostsAdd = (req, res, next) => {
-    res.render('posts/forms/add', { idRua: req.query.idRua, user: req.user })
+    req.page = { name: 'posts/forms/add' }
+    req.data = { idRua: req.query.idRua }
+    next()
 }
 
 exports.getCommentAdd = (req, res, next) => {
-    res.render('posts/forms/comment', { idPost: req.query.idPost, user: req.user })
+    req.page = { name: 'posts/forms/comment' }
+    req.data = { idPost: req.query.idPost }
+    next()
 }
 
 
@@ -41,26 +49,16 @@ exports.postAdd = (req, res, next) => {
 
         req.body.imagens = imagens
     }
-
-    axios({ method: 'post', url: API_URL + "/ruas/posts/add?idRua=" + req.query.idRua, data: req.body })
-        .then((response) => {
-            res.redirect('/posts')
-        })
-        .catch((error) => {
-            console.log(error)
-            res.render('posts/forms/add', { idRua: req.query.idRua, user: req.user, error: "Não foi possível criar o post." })
-        })
+    
+    req.page = { name: 'posts/confirm/add' }
+    req.promise = axios.post(API_URL + "/ruas/posts/add?idRua=" + req.query.idRua, req.body)
+    next()
 
 }
 
 exports.postComment = (req, res, next) => {
-    axios({ method: 'post', url: API_URL + "/ruas/posts/comments/add?idPost=" + req.query.idPost, data: req.body })
-        .then((response) => {
-            res.redirect('/posts')
-        })
-        .catch((error) => {
-            console.log(error)
-            res.render('posts/forms/comment', { idPost: req.query.idPost, user: req.user, error: "Não foi possível inserir comentário." })
-        })
+    req.page = { name: 'posts/confirm/comentario' }
+    req.promise = axios.post(API_URL + "/ruas/posts/comments/add?idPost=" + req.query.idPost, req.body)
+    next()
 }
 

@@ -29,19 +29,26 @@ const uploadTexto = multer({ storage: storageTexto })
 
 // GET
 
-router.get('/', generic.verifyToken, cb.getRuas)
-router.get('/get/:id', generic.verifyToken, cb.getRua)
-router.get('/add', generic.verifyToken, cb.getAdd)
-router.get('/admin', generic.verifyToken, cb.getAdmin)
-router.get('/delete/:id', generic.verifyToken, cb.getDelete)
-router.get('/update/:id', generic.verifyToken, cb.getUpdate)
+router.get('/',           cb.getRuas)
+router.get('/get/:id',    cb.getRua)
+
+router.get('/add',        generic.checkLevel, cb.getAdd)
+router.get('/admin',      generic.checkLevel, cb.getAdmin)
+router.get('/delete/:id', generic.checkLevel, cb.getDelete)
+router.get('/update/:id', generic.checkLevel, cb.getUpdate)
+
+router.get('/lugares',      cb.getLugares)
+router.get('/entidades',    cb.getEntidades)
+router.get('/datas',        cb.getDatas)
+router.get('/datas/:data',  cb.getRuasByData)
+
 
 // POST
 
-router.post('/add', generic.verifyToken, uploadImagens.array('imagens'), cb.postAdd, cb.storeData, cb.confirmPostAdd)
-router.post('/add/xml', generic.verifyToken, uploadTexto.array('files'), cb.postAddXml, cb.storeData, cb.confirmPostAdd)
-router.post('/delete/:id', generic.verifyToken, cb.postDelete)
-router.post('/update/:id', generic.verifyToken, cb.postUpdate)
+router.post('/add',         generic.checkLevel, uploadImagens.array('imagens'), cb.postAdd, cb.storeData)
+router.post('/add/xml',     generic.checkLevel, uploadTexto.array('files'), cb.postAddXml, cb.storeData)
+router.post('/delete/:id',  generic.checkLevel, cb.postDelete)
+router.post('/update/:id',  generic.checkLevel, cb.postUpdate)
 
 
 module.exports = router;

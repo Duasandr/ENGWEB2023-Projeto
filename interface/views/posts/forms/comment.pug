@@ -4,7 +4,7 @@ block middle-column
     // Middle Column
     .w3-col.m7
         .w3-row-padding
-            form(id="commentForm" action="/posts/comments/add?idPost=" + idPost method="post")
+            form(id="commentForm" action="/posts/comments/add?idPost=" + data.idPost method="post")
                 input(type="text" name="autor" value=user.username hidden)
                 
                 label Comentário:

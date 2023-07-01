@@ -19,12 +19,12 @@ const upload = multer({ storage: storage })
 
 // GET
 
-router.get('/', generic.verifyToken, cb.getPosts)
-router.get('/add', generic.verifyToken, cb.getPostsAdd)
-router.get('/comments/add', generic.verifyToken, cb.getCommentAdd)
+router.get('/', cb.getPosts)
+router.get('/add', cb.getPostsAdd)
+router.get('/comments/add', cb.getCommentAdd)
 
 // POST
-router.post('/add', generic.verifyToken, upload.array('files'), cb.postAdd)
-router.post('/comments/add', generic.verifyToken, cb.postComment)
+router.post('/add', upload.array('files'), cb.postAdd)
+router.post('/comments/add', cb.postComment)
 
 module.exports = router;

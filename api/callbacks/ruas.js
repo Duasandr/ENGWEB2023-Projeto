@@ -9,14 +9,14 @@ const RuaController = require('../controllers/rua')
  * Checks if the request has a query and if it has an order parameter.
  */
 getOrder = (req) => {
-    return req.query && req.query.order ? req.query.order : 1
+    return req.query.order && req.query.order ? req.query.order : 1
 }
 
 /**
  * Checks if the request has a query and if it has a sortBy parameter.
  */
 getSortBy = (req) => {
-    return req.query && req.query.sortBy ? req.query.sortBy : "_id"
+    return req.query.sortBy && req.query.sortBy ? req.query.sortBy : "_id"
 }
 
 /**
@@ -144,5 +144,16 @@ exports.addPosts = (req, res, next) => {
  * @param {*} next 
  */
 exports.addComment = (req, res, next) => {
-    req.promise = RuaController.addComment(req.body.idPost, req.body); next()
+    req.promise = RuaController.addComment(req.query.idPost, req.body); next()
+}
+
+/**
+ * Populates the ```req.promise``` with a promise that a list of all ```ruas``` that have a ```referencia``` with a ```data``` is returned.
+ * @details This function is used as a callback for the ```GET``` route ```/api/ruas/datas/:data```.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.listRuasByData = (req, res, next) => {
+    req.promise = RuaController.listRuasByData(req.params.data, getSort(req)); next()
 }

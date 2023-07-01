@@ -31,7 +31,7 @@ exports.awaitPromise = async (req, res, next) => {
  */
 exports.handleResponse = (req, res, next) => {
     if(req.error) {
-        res.status(req.error.status).jsonp(req.error.message)
+        res.status(req.error.status || 500).jsonp(req.error.message)
     } else if (req.data) {
         res.status(200).jsonp(req.data)
     } else {

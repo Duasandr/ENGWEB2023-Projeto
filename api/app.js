@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 const indexRouter = require('./routes/index')
 const ruasRouter = require('./routes/ruas')
+const generic = require('./callbacks/generic')
 
 
 // Connection to MongoDB
@@ -27,8 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', indexRouter)
-app.use('/api/ruas', ruasRouter)
+app.use('/api', indexRouter, )
+app.use('/api/ruas', ruasRouter, generic.awaitPromise ,generic.handleResponse)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,6 +44,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500).jsonp({ error: err.message })
+  console.log("Error: " + err)
   console.log("Error: " + err.message);
 });
 

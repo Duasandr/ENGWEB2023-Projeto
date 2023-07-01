@@ -155,6 +155,7 @@ exports.listPosts = (sortBy = "data_criado", order = -1) => {
  * @returns {Promise} promise that a new ```comentario``` is created
  */
 exports.addComment = (idPost, comment) => {
+    console.log(idPost)
     return RuaModel
         .find({ "posts._id": idPost })
         .updateOne({ $push: { "posts.$.comentarios": comment } })
@@ -172,4 +173,13 @@ exports.addPost = (idRua, post) => {
         .find({ "_id": idRua })
         .updateOne({ $push: { "posts": post } })
         .exec()
+}
+
+/**
+ * Returns a list of all ```ruas``` that have a ```referencia``` of type ```data``` with the given ```data```.
+ * @param {*} data 
+ * @returns 
+ */
+exports.listRuasByData = (data) => {
+    return RuaModel.find({ "referencias": { $elemMatch: { "tipo": "data", "texto": data } } }).exec()
 }

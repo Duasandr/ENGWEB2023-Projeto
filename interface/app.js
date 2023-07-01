@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const generic = require('./callbacks/generic')
 
 var indexRouter = require('./routes/index');
 var ruasRouter = require('./routes/ruas');
@@ -21,10 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/ruas', ruasRouter);
+app.use('/', generic.verifyToken, indexRouter);
+app.use('/ruas', generic.verifyToken, ruasRouter, generic.awaitPromise ,generic.handleResponse)
 app.use('/auth', authRouter)
-app.use('/posts', postsRouter)
+app.use('/posts', generic.verifyToken, postsRouter, generic.awaitPromise ,generic.handleResponse)
+
 app.use('/imagens', express.static("uploads/imagens"))
 
 // catch 404 and forward to error handler
@@ -40,6 +42,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.log("Error: " + err)
   res.render('error', { error: err.message });
 });
 

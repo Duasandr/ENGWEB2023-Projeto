@@ -1,0 +1,58 @@
+extends ../index 
+
+block middle-column 
+    - const rua = data
+    // Middle Column
+    .w3-col.m7
+
+        .w3-container.w3-card.w3-white.w3-round.w3-margin
+        
+            h4=rua.nome
+            h3=rua.numero
+            hr.w3-clear
+            .w3-row-padding(style="margin:0 -16px")
+                each imagem in rua.imagens
+                    .w3-row
+                        img.w3-margin-bottom(src="/imagens/"+ imagem.path style="width:100%" alt=imagem.legenda)
+            each paragrafo in rua.paragrafos
+                p=paragrafo
+            br
+
+        .w3-container.w3-card.w3-white.w3-round.w3-margin
+            if rua.casas.length > 0
+                h4 Casas
+                each casa in rua.casas 
+                    .w3-container.w3-card.w3-white.w3-round.w3-margin
+                        p 
+                            b Número: 
+                            span=casa.numero
+                            br
+
+                            if casa.foro.length > 0
+                                p 
+                                    b Foro: 
+                                    span=casa.foro
+                                br
+
+                            if casa.enfiteuta.length > 0
+                                p 
+                                    b Enfiteuta: 
+                                    each enfiteuta in casa.enfiteuta
+                                        p=enfiteuta
+                                br
+
+                            if casa.descricao
+                                p 
+                                    b Descrição: 
+                                each paragrafo in casa.descricao
+                                    p=paragrafo
+                                br
+                            
+                            if casa.vista.length > 0
+                                p 
+                                    b Vista: 
+                                    each vista in casa.vista
+                                        p=vista
+                                br
+
+
