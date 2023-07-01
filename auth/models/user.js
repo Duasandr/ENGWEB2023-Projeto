@@ -20,11 +20,15 @@ const userSchema = new mongoose.Schema({
     enum: ['admin', 'user'],        // only two levels are available
     default: 'user'
   },
-  dateCreated: {
+  dataRegisto: {
+    type: Date,
+    default: Date.now
+  },
+  dataUltimoAcesso: {
     type: Date,
     default: Date.now
   }
-});
+})
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 

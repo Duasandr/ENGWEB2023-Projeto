@@ -17,6 +17,8 @@ block middle-column
             .w3-container.w3-card.w3-white.w3-round.w3-margin
                 h4=rua.nome
                 
+                a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="/ruas/get/" + rua._id) View
+
                 a.fa.fa-thumbs-up.w3-button.w3-theme-d1.w3-margin-bottom.w3-margin-right(href="/ruas/update/" + rua._id) Update
 
                 a.fa.fa-comment.w3-button.w3-theme-d1.w3-margin-bottom(href="/ruas/delete/" + rua._id) Delete
