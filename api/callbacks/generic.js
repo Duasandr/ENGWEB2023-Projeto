@@ -3,24 +3,38 @@
  */
 
 /**
- * Handles the response from the database.
- * @details It receives the ```req``` object, and checks if it has an ```error``` property. 
- * If it does, it sends a 400 response with the error message. If it doesn't, it sends a 200 response with the data.
- * It should be used as the last middleware function in a route.
- * Check if the previous middleware functions added an ```error``` or a ```data``` property to the ```req``` object.
- * @param {*} req - Express request object.
- * @param {*} res - Express response object.
- * @param {*} next - Express next middleware function.
+ * Awaits a promise and stores the result in ```req.data``` or ```req.error``` if an error occurs
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.awaitPromise = async (req, res, next) => {
+    try {
+        req.data = await req.promise
+    } catch (error) {
+        req.error = error
+    } finally {
+        next()
+    }
+}
+
+/**
+ * Handles the response based on the data stored in ```req.data``` or ```req.error```
+ * @details If ```req.error``` is defined, the response will be a JSON object with the error message and status code of the error.
+ * 
+ * If ```req.data``` is defined, the response will be a JSON object with the data and status code 200.
+ * 
+ * If neither ```req.error``` or ```req.data``` are defined, the response will be a JSON object with the error message "Internal server error" and status code 500.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
  */
 exports.handleResponse = (req, res, next) => {
     if(req.error) {
-        console.log(req.error)
-        res.status(400).jsonp({ error: req.error.message })
+        res.status(req.error.status).jsonp(req.error.message)
     } else if (req.data) {
         res.status(200).jsonp(req.data)
     } else {
-        console.log("No data or error property in request object.")
-        res.error = { message: "No data or error property in request object." }
-        res.status(500).jsonp({})
+        res.status(500).jsonp({ error: "Internal server error" })
     }
 }
