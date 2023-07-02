@@ -131,4 +131,6 @@ node_modules
 .vscode/
 .idea/
 
-parse/texto/*
+dataset/texto
+dataset/imagem
+dataset/atual
