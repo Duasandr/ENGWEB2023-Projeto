@@ -158,3 +158,7 @@ exports.addComment = (req, res, next) => {
 exports.listRuasByData = (req, res, next) => {
     req.promise = RuaController.listRuasByData(req.params.data, getSort(req)); next()
 }
+
+exports.listRuasByLugar = (req, res, next) => {
+    req.promise = RuaController.listRuasByLugar(req.params.lugar, getSort(req)); next()
+}

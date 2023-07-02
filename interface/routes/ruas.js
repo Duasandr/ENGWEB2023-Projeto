@@ -38,6 +38,7 @@ router.get('/delete/:id', generic.checkLevel, cb.getDelete)
 router.get('/update/:id', generic.checkLevel, cb.getUpdate)
 
 router.get('/lugares',      cb.getLugares)
+router.get('/lugares/:lugar',  cb.getRuasByLugar)
 router.get('/entidades',    cb.getEntidades)
 router.get('/datas',        cb.getDatas)
 router.get('/datas/:data',  cb.getRuasByData)

@@ -85,7 +85,7 @@ exports.postAdd = (req, res, next) => {
         req.files.forEach(imagem => {
             imagens.push(
                 {
-                    "path": "/imagens/" + imagem.originalname,
+                    "path": "/" + imagem.originalname,
                     "legenda": req.body.legendasImagens[i++]
                 }
             )
@@ -198,8 +198,8 @@ exports.postUpdate = (req, res, next) => {
 
     const document = JSON.parse(req.body.rua)
 
-    req.page = { name: 'ruas/admin' }
-    req.promise = axios.get(API_URL + "/update/" + req.params.id, document)
+    req.page = { name: 'ruas/confirm/update' }
+    req.promise = axios.post(API_URL + "/ruas/update/" + req.params.id, document)
     next()
 }
 
@@ -210,7 +210,7 @@ exports.getLugares = (req, res, next) => {
     }
     
     req.page = { name: 'ruas/listLugares' }
-    req.promise = axios.get(API_URL + "/lugares")
+    req.promise = axios.get(API_URL + "/ruas/lugares")
     next()
 }
 
@@ -221,7 +221,7 @@ exports.getEntidades = (req, res, next) => {
     }
     
     req.page = { name: 'ruas/listEntidades' }
-    req.promise = axios.get(API_URL + "/entidades")
+    req.promise = axios.get(API_URL + "/ruas/entidades")
     next()
 }
 
@@ -244,5 +244,16 @@ exports.getRuasByData = (req, res, next) => {
     
     req.page = { name: 'ruas/list' }
     req.promise = axios.get(API_URL + "/ruas/datas/" + req.params.data)
+    next()
+}
+
+exports.getRuasByLugar = (req, res, next) => {
+    if(req.error) {
+        next()
+        return
+    }
+    
+    req.page = { name: 'ruas/list' }
+    req.promise = axios.get(API_URL + "/ruas/lugares/" + req.params.lugar)
     next()
 }

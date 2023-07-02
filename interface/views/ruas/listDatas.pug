@@ -11,11 +11,6 @@ block middle-column
                 p Nenhuma data para listar
 
         .w3-container.w3-card.w3-white.w3-round.w3-margin
-            a.fa.fa-angle-double-up(href="/ruas?sortBy=nome&order=1" style="font-size:50px")
-            a.fa.fa-angle-double-down(href="/ruas?sortBy=nome&order=-1" style="font-size:50px")
-            a.fa.fa-hourglass(href="/ruas/datas" style="font-size:50px")
-
-        .w3-container.w3-card.w3-white.w3-round.w3-margin
             h1 Datas
             each d in data
                 a(href="/ruas/datas/" + d._id)=d._id

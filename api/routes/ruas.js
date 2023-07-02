@@ -16,6 +16,7 @@ router.get('/lugares',      cb.listLugares)
 router.get('/entidades',    cb.listEntidades)
 router.get('/datas',        cb.listDatas)
 router.get('/datas/:data',  cb.listRuasByData)
+router.get('/lugares/:lugar',  cb.listRuasByLugar)
 router.get('/posts',        cb.listPosts)
 
 // POST routes

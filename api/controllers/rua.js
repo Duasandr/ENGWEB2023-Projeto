@@ -183,3 +183,7 @@ exports.addPost = (idRua, post) => {
 exports.listRuasByData = (data) => {
     return RuaModel.find({ "referencias": { $elemMatch: { "tipo": "data", "texto": data } } }).exec()
 }
+
+exports.listRuasByLugar = (lugar) => {
+    return RuaModel.find({ "referencias": { $elemMatch: { "tipo": "lugar", "texto": lugar } } }).exec()
+}

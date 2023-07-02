@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
   level: {
     type: String,
     required: true,
-    enum: ['admin', 'user'],        // only two levels are available
-    default: 'user'
+    enum: ['admin', 'consumidor'],        // only two levels are available
+    default: 'consumidor'
   },
   dataRegisto: {
     type: Date,
