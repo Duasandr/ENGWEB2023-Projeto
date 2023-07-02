@@ -158,4 +158,6 @@ Com o seu desenvolvimento, várias dificuldades foram encontradas, encontrando-s
 * Paginação: não foi possível implementar a paginação. A interface apresenta todos os resultados de uma só vez. No entanto, foi possível implementar um mecanismo de pesquisa que permite filtrar os resultados.
 * Generalização das rotas e código: esta parte foi a mais difícil de implementar, tendo sido a grande maioria do tempo de desenvolvimento deste projeto dispendido nesta parte. Apesar de agora exitir pouca repetição de código, foi necessário fazer inumeras alterações de cada vez que se queria adicionar uma nova funcionalidade.
 
-Apesar de tudo e tendo em conta os aspetos ainda a melhorar, foi possível desenvolver uma API de dados que permite a manipulação da informação guardada no MongoDB, um serviço de autenticação que permite a autenticação dos utilizadores e a manipulação e visualização através de uma interface.
+Apesar de tudo e tendo em conta os aspetos ainda a melhorar, foi possível desenvolver uma API de dados que permite a manipulação da informação guardada no MongoDB, um serviço de autenticação que permite a autenticação dos utilizadores e a manipulação e visualização através de uma interface. 
+
+Para correr os servidores, é necessário correr os seguintes comandos em cada uma das pastas: npm i --save e npm start.
